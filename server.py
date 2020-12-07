@@ -3,7 +3,7 @@ from CompanyDao import companyDao
 
 app = Flask(__name__, static_url_path='', static_folder='staticpages')
 
-# Root
+# Root welcome note
 # curl http://127.0.0.1:5000/
 @app.route('/')
 def index():
@@ -61,6 +61,11 @@ def createDept():
 def createEmp():
    if not request.json:
       abort(400)
+   # check if dept exists
+   dept = request.json["dept"]
+   checkDept = companyDao.findDeptById(dept)
+   if checkDept == {}:
+      return jsonify({}), 404
    emp = {
       "name": request.json["name"],
       "address": request.json["address"],
@@ -74,7 +79,7 @@ def createEmp():
 @app.route('/departments/<int:deptID>', methods=['PUT'])
 def updateDept(deptID):
    foundDept = companyDao.findDeptById(deptID)
-   print(foundDept)
+   # print(foundDept)
    if foundDept == {}:
       return jsonify({}), 404
    currentDept = foundDept
@@ -92,7 +97,7 @@ def updateDept(deptID):
 @app.route('/employees/<int:empID>', methods=['PUT'])
 def updateEmp(empID):
    foundEmp = companyDao.findEmpById(empID)
-   print(foundEmp)
+   # print(foundEmp)
    if foundEmp == {}:
       return jsonify({}), 404
    currentEmp = foundEmp
