@@ -88,9 +88,34 @@ class CompanyDao:
       result = cursor.fetchone()
       return self.convertEmpToDict(result)
 
+   # Update department info for given deptID
+   def updateDept(self, dept):
+      cursor = self.db.cursor()
+      sql = "update departments set name = %s, location = %s, budget = %s where deptID = %s"
+      values = [
+         dept['name'],
+         dept['location'],
+         dept['budget'],
+         dept['deptID']
+      ]
+      cursor.execute(sql, values)
+      self.db.commit()
+      return dept
 
-
-
+   # Update employee info for given empID
+   def updateEmp(self, emp):
+      cursor = self.db.cursor()
+      sql = "update employees set name = %s, address = %s, salary = %s, dept = %s where empID = %s"
+      values = [
+         emp['name'],
+         emp['address'],
+         emp['salary'],
+         emp['dept'],
+         emp['empID']
+      ]
+      cursor.execute(sql, values)
+      self.db.commit()
+      return emp
 
 
 
@@ -102,8 +127,8 @@ class CompanyDao:
       dept = {}
       if result:
          for i , colName in enumerate(colnames):
-               value = result[i]
-               dept[colName] = value
+            value = result[i]
+            dept[colName] = value
       return dept
 
    # Function to convert employee into Dictionary/JSON
@@ -112,8 +137,8 @@ class CompanyDao:
       emp = {}
       if result:
          for i, colName in enumerate(colnames):
-             value = result[i]
-             emp[colName] = value
+            value = result[i]
+            emp[colName] = value
       return emp
 
 companyDao = CompanyDao()

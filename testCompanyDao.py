@@ -16,6 +16,13 @@ dept2 = {
    'budget': 250000
 }
 
+dept3 = {
+   'name':'it',
+   'location':'meath',
+   'budget': 350000,
+   'deptID':2
+}
+
 emp1 = {
    # 'empID' is auto-incremented
    'name':'mary',
@@ -25,7 +32,7 @@ emp1 = {
 }
 
 emp2 = {
-    # 'empID' is auto-incremented
+   # 'empID' is auto-incremented
    'name':'tom',
    'address':'wicklow',
    'salary':57000,
@@ -38,6 +45,14 @@ emp3 = {
    'address': 'carlow',
    'salary':42000,
    'dept':2
+}
+
+emp4 = {
+   'name':'sue',
+   'address': 'dublin',
+   'salary':30000,
+   'dept':1,
+   'empID':3
 }
 
 # returnValue = companyDao.createDept(dept1)
@@ -63,4 +78,7 @@ returnValue = companyDao.findEmpById(3)
 print("find Emp By Id")
 print(returnValue)
 
-
+returnValue = companyDao.updateDept(dept3)
+print(returnValue)
+returnValue = companyDao.updateEmp(emp4)
+print(returnValue)
