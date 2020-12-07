@@ -116,6 +116,10 @@ def updateEmp(empID):
 # curl -X DELETE http://127.0.0.1:5000/departments/1
 @app.route('/departments/<int:deptID>', methods=['DELETE'])
 def deleteDept(deptID):
+   # check if dept exists
+   foundDept = companyDao.findDeptById(deptID)
+   if foundDept == {}:
+      return jsonify({"done": False}), 404
    companyDao.deleteDept(deptID)
    return jsonify({"done": True})
 
@@ -123,6 +127,10 @@ def deleteDept(deptID):
 # curl -X DELETE http://127.0.0.1:5000/employees/1
 @app.route('/employees/<int:empID>', methods=['DELETE'])
 def deleteEmp(empID):
+   # check if emp exists
+   foundEmp = companyDao.findEmpById(empID)
+   if foundEmp == {}:
+      return jsonify({"done": False}), 404
    companyDao.deleteEmp(empID)
    return jsonify({"done": True})
 

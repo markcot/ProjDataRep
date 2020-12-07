@@ -18,3 +18,11 @@ The 'employees' table has the following data fields and links to the 'department
 * address
 * salary
 * dept (FOREIGN KEY)
+
+This database is stored in an sql database, which has an initialisation file 'initdb.sql'. The sql commands to create the database 'company' and its associated tables 'departments' and 'employees' are stored in this file.
+
+### Company sql Database Access Object (DAO)
+The DAO for the 'company' database has been created in the class file 'CompanyDao.py', which creates an instance of the class called 'companyDao' that can be used in with an associated python server to undertake CRUD operations for the sql database. The sql database login configuration specific for each machine and user are stored in the 'dbconfig.py' file.
+
+### Flask server
+A python server called 'server.py' has been created using Python flask for undertaking CRUD operations in association with the 'company' sql DAO.
