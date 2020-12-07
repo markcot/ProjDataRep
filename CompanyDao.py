@@ -18,23 +18,24 @@ class CompanyDao:
    # Create department
    def createDept(self, dept):
       cursor = self.db.cursor()
-      sql = "insert into departments (name, location, budget) values (%s,%s,%s)"
+      sql = "insert into departments (deptID, name, location, budget) values (%s,%s,%s,%s)"
       values = [
-         # 'deptID' is auto-incremented
+         dept['deptID'],
          dept['name'],
          dept['location'],
          dept['budget']
       ]
       cursor.execute(sql, values)
       self.db.commit()
-      return cursor.lastrowid
+      # return cursor.lastrowid
+      return dept['deptID']
 
    # Create employee
    def createEmp(self, emp):
       cursor = self.db.cursor()
-      sql = "insert into employees (name, address, salary, dept) values (%s,%s,%s,%s)"
+      sql = "insert into employees (empID, name, address, salary, dept) values (%s,%s,%s,%s,%s)"
       values = [
-         # 'empID' is auto-incremented
+         emp['empID'],
          emp['name'],
          emp['address'],
          emp['salary'],
@@ -42,7 +43,8 @@ class CompanyDao:
       ]
       cursor.execute(sql, values)
       self.db.commit()
-      return cursor.lastrowid
+      # return cursor.lastrowid
+      return emp['empID']
 
    # Return info on all departments
    def getAllDept(self):
@@ -117,9 +119,23 @@ class CompanyDao:
       self.db.commit()
       return emp
 
+   # Delete department for given deptID
+   def deleteDept(self, deptID):
+      cursor = self.db.cursor()
+      sql = 'delete from departments where deptID = %s'
+      values = [ deptID ]
+      cursor.execute(sql, values)
+      self.db.commit()
+      return {}
 
-
-
+   # Delete employee for given empID
+   def deleteEmp(self, empID):
+      cursor = self.db.cursor()
+      sql = 'delete from employees where empID = %s'
+      values = [ empID ]
+      cursor.execute(sql, values)
+      self.db.commit()
+      return {}
 
    # Function to convert department into Dictionary/JSON
    def convertDeptToDict(self, result):
