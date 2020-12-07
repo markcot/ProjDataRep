@@ -81,6 +81,9 @@ print(returnValue)
 returnValue = companyDao.findEmpById(emp2['empID'])
 print("find Emp By Id")
 print(returnValue)
+returnValue = companyDao.getAllEmpByDept(dept2['name'])
+print("find Emp By Dept Name")
+print(returnValue)
 
 # Update table contents
 returnValue = companyDao.updateDept(dept3)

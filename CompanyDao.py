@@ -90,6 +90,20 @@ class CompanyDao:
       result = cursor.fetchone()
       return self.convertEmpToDict(result)
 
+   # Return info on all employees from a given department name
+   def getAllEmpByDept(self, name):
+      cursor = self.db.cursor()
+      sql = 'select * from employees where dept = (select deptID from departments where name = %s);'
+      values = [ name ]
+      cursor.execute(sql, values)
+      results = cursor.fetchall()
+      returnArray = []
+      # print(results)
+      for result in results:
+         resultAsDict = self.convertEmpToDict(result)
+         returnArray.append(resultAsDict)
+      return returnArray
+
    # Update department info for given deptID
    def updateDept(self, dept):
       cursor = self.db.cursor()
