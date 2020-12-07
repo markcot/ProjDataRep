@@ -18,7 +18,7 @@ class CompanyDao:
    # Create department
    def createDept(self, dept):
       cursor = self.db.cursor()
-      sql = "insert into department (name, location, budget) values (%s,%s,%s)"
+      sql = "insert into departments (name, location, budget) values (%s,%s,%s)"
       values = [
          # 'deptID' is auto-incremented
          dept['name'],
@@ -32,7 +32,7 @@ class CompanyDao:
    # Create employee
    def createEmp(self, emp):
       cursor = self.db.cursor()
-      sql = "insert into employee (name, address, salary, dept) values (%s,%s,%s,%s)"
+      sql = "insert into employees (name, address, salary, dept) values (%s,%s,%s,%s)"
       values = [
          # 'empID' is auto-incremented
          emp['name'],
@@ -47,7 +47,7 @@ class CompanyDao:
    # Return info on all departments
    def getAllDept(self):
       cursor = self.db.cursor()
-      sql = 'select * from department'
+      sql = 'select * from departments'
       cursor.execute(sql)
       results = cursor.fetchall()
       returnArray = []
@@ -60,7 +60,7 @@ class CompanyDao:
    # Return info on all employees
    def getAllEmp(self):
       cursor = self.db.cursor()
-      sql = 'select * from employee'
+      sql = 'select * from employees'
       cursor.execute(sql)
       results = cursor.fetchall()
       returnArray = []
@@ -73,7 +73,7 @@ class CompanyDao:
    # Return info on department for given deptID
    def findDeptById(self, deptID):
       cursor = self.db.cursor()
-      sql = 'select * from department where deptID = %s'
+      sql = 'select * from departments where deptID = %s'
       values = [ deptID ]
       cursor.execute(sql, values)
       result = cursor.fetchone()
@@ -82,11 +82,15 @@ class CompanyDao:
    # Return info on employee for given empID
    def findEmpById(self, empID):
       cursor = self.db.cursor()
-      sql = 'select * from employee where empID = %s'
+      sql = 'select * from employees where empID = %s'
       values = [ empID ]
       cursor.execute(sql, values)
       result = cursor.fetchone()
       return self.convertEmpToDict(result)
+
+
+
+
 
 
 

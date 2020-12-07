@@ -2,7 +2,7 @@ CREATE DATABASE company;
 
 USE company;
 
-CREATE TABLE department(
+CREATE TABLE departments(
 	deptID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) DEFAULT NULL,
     location varchar(255) DEFAULT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE department(
     PRIMARY KEY (deptID)
     );    
 
-CREATE TABLE employee(
+CREATE TABLE employees(
 	empID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) DEFAULT NULL,
     address VARCHAR(255) DEFAULT NULL,
@@ -19,6 +19,6 @@ CREATE TABLE employee(
     PRIMARY KEY (empID),
     CONSTRAINT FK_deptEmp
 		FOREIGN KEY (dept)
-		REFERENCES department(deptID)
+		REFERENCES departments(deptID)
         ON DELETE SET NULL
     );
