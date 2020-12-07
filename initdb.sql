@@ -20,4 +20,5 @@ CREATE TABLE employee(
     CONSTRAINT FK_deptEmp
 		FOREIGN KEY (dept)
 		REFERENCES department(deptID)
+        ON DELETE SET NULL
     );
