@@ -3,14 +3,14 @@ from CompanyDao import companyDao
 
 # Department test cases
 dept1 = {
-   'deptID':1,
+   # 'deptID':1, - auto-increment
    'name':'hr',
    'location':'dublin',
    'budget':100000
 }
 
 dept2 = {
-   'deptID':2,
+   # 'deptID':2, - auto-increment
    'name':'sales',
    'location':'kilkenny',
    'budget': 250000
@@ -25,7 +25,7 @@ dept3 = {
 
 # Employee test cases
 emp1 = {
-   'empID':100,
+   # 'empID':1, - auto-increment
    'name':'mary',
    'address':'dublin',
    'salary':60100,
@@ -33,7 +33,7 @@ emp1 = {
 }
 
 emp2 = {
-   'empID':101,
+   # 'empID':2, - auto-increment
    'name':'tom',
    'address':'wicklow',
    'salary':57000,
@@ -41,7 +41,7 @@ emp2 = {
 }
 
 emp3 = {
-   'empID':102,
+   # 'empID':3, - auto-increment
    'name':'sarah',
    'address': 'carlow',
    'salary':42000,
@@ -49,7 +49,7 @@ emp3 = {
 }
 
 emp4 = {
-   'empID':102,
+   'empID':3,
    'name':'sue',
    'address': 'dublin',
    'salary':30000,
@@ -75,13 +75,13 @@ returnValue = companyDao.getAllEmp()
 print(returnValue)
 
 # Get table contents by ID
-returnValue = companyDao.findDeptById(dept2['deptID'])
+returnValue = companyDao.findDeptById(2)
 print("find Dept By Id")
 print(returnValue)
-returnValue = companyDao.findEmpById(emp2['empID'])
+returnValue = companyDao.findEmpById(2)
 print("find Emp By Id")
 print(returnValue)
-returnValue = companyDao.getAllEmpByDept(dept2['name'])
+returnValue = companyDao.getAllEmpByDept('sales')
 print("find Emp By Dept Name")
 print(returnValue)
 
@@ -92,15 +92,15 @@ returnValue = companyDao.updateEmp(emp4)
 print(returnValue)
 
 # Delete table contents
-returnValue = companyDao.deleteDept(dept1['deptID'])
+returnValue = companyDao.deleteDept(1)
 print(returnValue)
-returnValue = companyDao.deleteDept(dept2['deptID'])
+returnValue = companyDao.deleteDept(2)
 print(returnValue)
-returnValue = companyDao.deleteEmp(emp1['empID'])
+returnValue = companyDao.deleteEmp(1)
 print(returnValue)
-returnValue = companyDao.deleteEmp(emp2['empID'])
+returnValue = companyDao.deleteEmp(2)
 print(returnValue)
-returnValue = companyDao.deleteEmp(emp3['empID'])
+returnValue = companyDao.deleteEmp(3)
 print(returnValue)
 
 # Get all table contents

@@ -18,24 +18,24 @@ class CompanyDao:
    # Create department
    def createDept(self, dept):
       cursor = self.db.cursor()
-      sql = "insert into departments (deptID, name, location, budget) values (%s,%s,%s,%s)"
+      sql = "insert into departments (name, location, budget) values (%s,%s,%s)"
       values = [
-         dept['deptID'],
+         # dept['deptID'], - auto-increment
          dept['name'],
          dept['location'],
          dept['budget']
       ]
       cursor.execute(sql, values)
       self.db.commit()
-      # return cursor.lastrowid
-      return dept['deptID']
+      return cursor.lastrowid
+      # return dept['deptID']
 
    # Create employee
    def createEmp(self, emp):
       cursor = self.db.cursor()
-      sql = "insert into employees (empID, name, address, salary, dept) values (%s,%s,%s,%s,%s)"
+      sql = "insert into employees (name, address, salary, dept) values (%s,%s,%s,%s)"
       values = [
-         emp['empID'],
+         # emp['empID'], - auto-increment
          emp['name'],
          emp['address'],
          emp['salary'],
@@ -43,8 +43,8 @@ class CompanyDao:
       ]
       cursor.execute(sql, values)
       self.db.commit()
-      # return cursor.lastrowid
-      return emp['empID']
+      return cursor.lastrowid
+      # return emp['empID']
 
    # Return info on all departments
    def getAllDept(self):
