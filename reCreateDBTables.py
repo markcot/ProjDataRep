@@ -1,18 +1,18 @@
 import mysql.connector
 import dbconfig as cfg
 
-# Create database connection
-db = mysql.connector.connect(
-   host=cfg.mysql['host'],
-   user=cfg.mysql['username'],
-   password=cfg.mysql['password'],
-   database=cfg.mysql['database']
-)
-# print ("connection made")
-
 ask = input("Have you sure you want to delete the DB tables (y/n): ")
 
 if ask == "y":
+   # Create database connection
+   db = mysql.connector.connect(
+      host=cfg.mysql['host'],
+      user=cfg.mysql['username'],
+      password=cfg.mysql['password'],
+      database=cfg.mysql['database']
+   )
+   # print ("connection made")
+
    # Delete employees table
    cursor = db.cursor()
    sql="drop table employees"
@@ -55,5 +55,8 @@ if ask == "y":
       )"""
    cursor.execute(sql)
    print("employees table creation done")
+
+   cursor.close()
+   db.close()
 else:
    print("DB tables not deleted")
