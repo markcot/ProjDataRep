@@ -1,7 +1,7 @@
 # Data Representation Project 2020
-- GMIT Lecturer: Andrew Beatty
-- Author: Mark Cotter g00376335@gmit.ie
-- Project: Company Database
+**GMIT Lecturer:** Andrew Beatty
+**Author:** Mark Cotter g00376335@gmit.ie
+**Project:** Company Database
 
 ### Database Description Plan
 A database 'company' is required to manage department and employee information and has two tables 'departments' and 'employees'.

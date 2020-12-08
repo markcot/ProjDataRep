@@ -93,7 +93,7 @@ def updateDept(deptID):
    return jsonify(currentDept)
 
 #update employee
-# curl -X PUT -d "{\"name\":\"sue\", \"salary\":30000}" -H "content-type:application/json" http://127.0.0.1:5000/employees/2
+# curl -X PUT -d "{\"name\":\"sue\", \"dept\":1, \"salary\":30000}" -H "content-type:application/json" http://127.0.0.1:5000/employees/2
 @app.route('/employees/<int:empID>', methods=['PUT'])
 def updateEmp(empID):
    foundEmp = companyDao.findEmpById(empID)
@@ -108,6 +108,11 @@ def updateEmp(empID):
    if 'budget' in request.json:
       currentEmp['budget'] = request.json['budget']
    if 'dept' in request.json:
+      # check if dept exists
+      dept = request.json['dept']
+      checkDept = companyDao.findDeptById(dept)
+      if checkDept == {}:
+         return jsonify({}), 404
       currentEmp['dept'] = request.json['dept']
    companyDao.updateEmp(currentEmp)
    return jsonify(currentEmp)
