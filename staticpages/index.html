@@ -3,10 +3,294 @@
 
 <head>
    <title>Index</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-   <p>Welcome to my Index</p>
+
+   <div id="createUpdateDept" style="display:none">
+      <h2>Create / Update Department</h2>
+      <table id="createUpdateDeptForm" class="table">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col">Details</th>
+               <th scope="col">Department Input</th>
+            </tr>
+         </thead>
+         <tr>
+            <th scope="col">DeptID</th>
+            <td><input type="text" name="deptID" value="not available" readonly="readonly"></td>
+         </tr>
+         <tr>
+            <th scope="col">Name</th>
+            <td><input type="text" name="name"></td>
+         </tr>
+         <tr>
+            <th scope="col">Location</th>
+            <td><input type="text" name="location"></td>
+         </tr>
+         <tr>
+            <th scope="col">Budget</th>
+            <td><input type="currency" name="budget"></td>
+         </tr>
+         <tr>
+            <td><button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button></td>
+            <td><button id="updateDept" onclick="doUpdateDept()"type="button" class="btn btn-info">Update</button></td>
+         </tr>
+      </table>
+   </div>
+
+   <div id="createUpdateEmp" style="display:none">
+      <h2>Create / Update Employee</h2>
+      <table id="createUpdateEmpForm" class="table">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col">Details</th>
+               <th scope="col">Employee Input</th>
+            </tr>
+         </thead>
+         <tr>
+            <th scope="col">EmpID</th>
+            <td><input type="text" name="empID" value="not available" readonly="readonly"></td>
+         </tr>
+         <tr>
+            <th scope="col">Name</th>
+            <td><input type="text" name="name"></td>
+         </tr>
+         <tr>
+            <th scope="col">Address</th>
+            <td><input type="text" name="address"></td>
+         </tr>
+         <tr>
+            <th scope="col">Salary</th>
+            <td><input type="currency" name="salary"></td>
+         </tr>
+         <tr>
+            <th scope="col">Dept</th>
+            <td><input type="text" name="dept"></td>
+         </tr>
+         <tr>
+            <td><button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button></td>
+            <td><button id="updateEmp" onclick="doUpdateEmp()" type="button" class="btn btn-info">Update</button></td>
+         </tr>
+      </table>
+   </div>
+
+   <div id="displayDept" style="display:none">
+      <h2>Departments</h2>
+      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+      <button onclick="showCreateDept()" type="button" class="btn btn-success">Create Department</button>
+      <table id="deptTable" class="table">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col">DeptID</th>
+               <th scope="col">Name</th>
+               <th scope="col">Location</th>
+               <th scope="col">Budget</th>
+               <th scope="col" colspan="2">Options</th>
+            </tr>
+         </thead>
+      </table>
+   </div>
+
+   <div id="displayEmp" style="display:none">
+      <h2>Employees</h2>
+      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+      <button onclick="showCreateEmp()" type="button" class="btn btn-success">Create Employee</button>
+      <table id="empTable" class="table">
+         <thead class="thead-dark">
+            <tr>
+               <th scope="col">EmpID</th>
+               <th scope="col">Name</th>
+               <th scope="col">Address</th>
+               <th scope="col">Salary</th>
+               <th scope="col">Dept</th>
+               <th scope="col" colspan="2">Options</th>
+            </tr>
+         </thead>
+      </table>
+   </div>
+
+   <div id="displayHome">
+      <h2>Home Page</h2>
+      <table id="HomeTable" class="table">
+         <tr>
+            <td>
+               <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
+            </td>
+         </tr>
+      </table>
+   </div>
+
+   <script>
+
+      function showDeptDisplay() {
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "block"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "none"
+         document.getElementById('createUpdateEmp').style.display = "none"
+      }
+
+      function showCreateDept(){
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "block"
+         document.getElementById('createUpdateEmp').style.display = "none"
+      }
+
+      function doCreateDept() {
+         dept = getDeptFromForm()
+         // showDeptDisplay()
+      }
+
+      function doUpdateDept() {
+         showDeptDisplay()
+      }
+
+      function showEmpDisplay() {
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "block"
+         document.getElementById('createUpdateDept').style.display = "none"
+         document.getElementById('createUpdateEmp').style.display = "none"
+      }
+
+      function showCreateEmp() {
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "none"
+         document.getElementById('createUpdateEmp').style.display = "block"
+      }
+
+      function doCreateEmp() {
+         emp = getEmpFromForm()
+         // showEmpDisplay()
+      }
+
+      function doUpdateEmp() {
+         showEmpDisplay()
+      }
+
+      function showHome() {
+         document.getElementById('displayHome').style.display = "block"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "none"
+         document.getElementById('createUpdateEmp').style.display = "none"
+      }
+
+      function getDeptFromForm(){
+         var form = document.getElementById('createUpdateDeptForm')
+         var dept = {}
+         dept.deptID = form.querySelector('input[name="deptID"]').value
+         dept.name = form.querySelector('input[name="name"]').value
+         dept.location = form.querySelector('input[name="location"]').value
+         dept.budget = form.querySelector('input[name="budget"]').value
+         console.log(dept)
+         return dept
+      }
+
+      function getEmpFromForm(){
+         var form = document.getElementById('createUpdateEmpForm')
+         var emp = {}
+         emp.empID = form.querySelector('input[name="empID"]').value
+         emp.name = form.querySelector('input[name="name"]').value
+         emp.address = form.querySelector('input[name="address"]').value
+         emp.salary = form.querySelector('input[name="salary"]').value
+         emp.dept = form.querySelector('input[name="dept"]').value
+         console.log(emp)
+         return emp
+      }
+
+
+      function populateDeptTable(){
+         // ajax getAllDept
+         $.ajax({
+            url: 'http://127.0.0.1:5000/departments',
+            method: 'GET',
+            datatype: 'JSON',
+            success: function (results) {
+               for (dept of results) {
+                  addDepttoTable(dept)
+               }
+            },
+            error: function (xhr, status, error) {
+               console.log("error " + error + " code:" + status)
+            }
+         })
+      }
+
+      function populateEmpTable(){
+         // ajax getAllEmp
+         $.ajax({
+            url: 'http://127.0.0.1:5000/employees',
+            method: 'GET',
+            datatype: 'JSON',
+            success: function (results) {
+               for (emp of results) {
+                  addEmptoTable(emp)
+               }
+            },
+            error: function (xhr, status, error) {
+               console.log("error " + error + " code:" + status)
+            }
+         })
+      }
+
+      function addDepttoTable(dept){
+         // console.log("add to dept table working")
+         var tableElem = document.getElementById('deptTable')
+         var rowElem = tableElem.insertRow(-1)
+         rowElem.setAttribute('id', "d"+dept.deptID)
+         var cell1 = rowElem.insertCell(0);
+         cell1.innerHTML = dept.deptID
+         var cell2 = rowElem.insertCell(1);
+         cell2.innerHTML = dept.name
+         var cell3 = rowElem.insertCell(2);
+         cell3.innerHTML = dept.location
+         var cell4 = rowElem.insertCell(3);
+         cell4.innerHTML = dept.budget
+         var cell5 = rowElem.insertCell(4);
+         cell5.innerHTML = '<button onclick="showDeptUpdate(this)"  type="button" class="btn btn-info">Update</button>'
+         var cell6 = rowElem.insertCell(5);
+         cell6.innerHTML = '<button onclick="doDeptDelete(this)" type="button" class="btn btn-danger">Delete</button>'
+      }
+
+      function addEmptoTable(emp){
+         // console.log("add to emp table working")
+         var tableElem = document.getElementById('empTable')
+         var rowElem = tableElem.insertRow(-1)
+         rowElem.setAttribute('id', "e"+emp.empID)
+         var cell1 = rowElem.insertCell(0);
+         cell1.innerHTML = emp.empID
+         var cell2 = rowElem.insertCell(1);
+         cell2.innerHTML = emp.name
+         var cell3 = rowElem.insertCell(2);
+         cell3.innerHTML = emp.address
+         var cell4 = rowElem.insertCell(3);
+         cell4.innerHTML = emp.salary
+         var cell5 = rowElem.insertCell(4);
+         cell5.innerHTML = emp.dept
+         var cell6 = rowElem.insertCell(5);
+         cell6.innerHTML = '<button onclick="showEmpUpdate(this)"  type="button" class="btn btn-info">Update</button>'
+         var cell7 = rowElem.insertCell(6);
+         cell7.innerHTML = '<button onclick="doEmpDelete(this)" type="button" class="btn btn-danger">Delete</button>'
+      }
+
+      populateDeptTable()
+      populateEmpTable()
+   </script>
 </body>
 
 </html>
