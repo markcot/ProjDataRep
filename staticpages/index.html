@@ -79,7 +79,7 @@
          </tr>
          <tr>
             <th scope="col">Dept</th>
-            <td><input type="number" class="form-control" name="dept" placeholder="enter dept ID number" required></td>
+            <td><input type="number" class="form-control" name="dept" placeholder="enter department ID number" required></td>
          </tr>
          <tr>
             <td></td>
@@ -94,7 +94,7 @@
    <div id="displayDept" style="display:none">
       <h2>Departments</h2>
       <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showCreateDept()" type="button" class="btn btn-success">Create Department</button>
+      <button onclick="showDeptCreate()" type="button" class="btn btn-success">Create Department</button>
       <table id="deptTable" class="table">
          <thead class="thead-dark">
             <tr>
@@ -111,7 +111,7 @@
    <div id="displayEmp" style="display:none">
       <h2>Employees</h2>
       <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showCreateEmp()" type="button" class="btn btn-success">Create Employee</button>
+      <button onclick="showEmpCreate()" type="button" class="btn btn-success">Create Employee</button>
       <table id="empTable" class="table">
          <thead class="thead-dark">
             <tr>
@@ -152,7 +152,9 @@
          document.getElementById('createUpdateEmp').style.display = "none"
       }
 
-      function showCreateDept(){
+      function showDeptCreate(){
+         clearDeptForm()
+         
          document.getElementById('displayHome').style.display = "none"
          document.getElementById('displayDept').style.display = "none"
          document.getElementById('displayEmp').style.display = "none"
@@ -295,7 +297,9 @@
          document.getElementById('createUpdateEmp').style.display = "none"
       }
 
-      function showCreateEmp() {
+      function showEmpCreate() {
+         clearEmpForm()
+
          document.getElementById('displayHome').style.display = "none"
          document.getElementById('displayDept').style.display = "none"
          document.getElementById('displayEmp').style.display = "none"
