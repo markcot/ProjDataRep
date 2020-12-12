@@ -51,7 +51,7 @@ if ask == "y":
       CONSTRAINT FK_deptEmp
          FOREIGN KEY (dept)
          REFERENCES departments(deptID)
-         ON DELETE SET NULL
+         ON DELETE RESTRICT
       )"""
    cursor.execute(sql)
    print("employees table creation done")

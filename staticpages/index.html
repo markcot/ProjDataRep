@@ -222,6 +222,7 @@
       }
 
       function updateDeptServer(dept) {
+         // ajax updateDept
          $.ajax({
             url: "/departments/" + dept.deptID,
             data: JSON.stringify(dept),
@@ -250,6 +251,7 @@
 
       function doCreateDept() {
          dept = getDeptFromForm()
+         // ajax createDept
          $.ajax({
             url: '/departments',
             data: JSON.stringify(dept),
@@ -257,7 +259,7 @@
             datatype: 'JSON',
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-               console.log(result)
+               console.log("Department " + result + " added")
                dept.deptID = result
                addDepttoTable(dept)
                showDeptDisplay()
@@ -274,7 +276,8 @@
          var rowElement = thisElem.parentNode.parentNode;
          var index = rowElement.rowIndex;
          // deptID is dept table row id omitting the first character 'd'
-         dept = rowElement.getAttribute("id").substr(1);
+         var dept = rowElement.getAttribute("id").substr(1);
+         // ajax deleteDept
          $.ajax({
             url:"/departments/"+dept,
             method:"DELETE",
@@ -285,6 +288,7 @@
             },
             error:function(xhr,status,error){
                console.log(error)
+               alert("Cannot delete department with associated employees")
             }
          })
       }
@@ -339,6 +343,7 @@
          emp.address = rowElement.cells[2].firstChild.textContent
          emp.salary = rowElement.cells[3].firstChild.textContent
          emp.dept = rowElement.cells[4].firstChild.textContent
+         // console.log(emp.empID)
          return emp
       }
 
@@ -367,10 +372,12 @@
 
       function doUpdateEmp() {
          emp = getEmpFromForm()
+         // console.log(emp)
          updateEmpServer(emp)       
       }
 
       function updateEmpServer(emp) {
+         // ajax updateEmp
          $.ajax({
             url: "/employees/" + emp.empID,
             data: JSON.stringify(emp),
@@ -397,11 +404,12 @@
          rowElement.cells[2].firstChild.textContent = emp.address
          rowElement.cells[3].firstChild.textContent = emp.salary
          rowElement.cells[4].firstChild.textContent = emp.dept
-         //console.log("updating emp table")
+         // console.log("updating emp table")
       }
 
       function doCreateEmp() {
          emp = getEmpFromForm()
+         // ajax createEmp
          $.ajax({
             url: '/employees',
             data: JSON.stringify(emp),
@@ -409,7 +417,7 @@
             datatype: 'JSON',
             contentType: "application/json; charset=utf-8",
             success: function (result) {
-               console.log(result)
+               console.log("Employee " + result + " created")
                emp.empID = result
                addEmptoTable(emp)
                showEmpDisplay()
@@ -429,6 +437,7 @@
          var index = rowElement.rowIndex;
          // empID is emp table row id omitting the first character 'e'
          emp = rowElement.getAttribute("id").substr(1);
+         // ajax deleteEmp
          $.ajax({
             url:"/employees/"+ emp,
             method:"DELETE",
@@ -454,7 +463,7 @@
       function getDeptFromForm(){
          var form = document.getElementById('createUpdateDeptForm')
          var dept = {}
-         dept.deptID = form.querySelector('input[name="deptID"]').value
+         dept.deptID = parseInt(form.querySelector('input[name="deptID"]').value)
          dept.name = form.querySelector('input[name="name"]').value
          dept.location = form.querySelector('input[name="location"]').value
          dept.budget = parseInt(form.querySelector('input[name="budget"]').value)
@@ -465,7 +474,7 @@
       function getEmpFromForm(){
          var form = document.getElementById('createUpdateEmpForm')
          var emp = {}
-         emp.empID = form.querySelector('input[name="empID"]').value
+         emp.empID = parseInt(form.querySelector('input[name="empID"]').value)
          emp.name = form.querySelector('input[name="name"]').value
          emp.address = form.querySelector('input[name="address"]').value
          emp.salary = parseInt(form.querySelector('input[name="salary"]').value)
@@ -477,7 +486,7 @@
       function populateDeptTable(){
          // ajax getAllDept
          $.ajax({
-            url: 'http://127.0.0.1:5000/departments',
+            url: '/departments',
             method: 'GET',
             datatype: 'JSON',
             success: function (results) {
@@ -494,7 +503,7 @@
       function populateEmpTable(){
          // ajax getAllEmp
          $.ajax({
-            url: 'http://127.0.0.1:5000/employees',
+            url: '/employees',
             method: 'GET',
             datatype: 'JSON',
             success: function (results) {

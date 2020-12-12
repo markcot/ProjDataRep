@@ -34,10 +34,10 @@ def findEmpById(empID):
    return jsonify(companyDao.findEmpById(empID))
 
 #get all employees by department id
-# curl http://127.0.0.1:5000/employees/hr
-@app.route('/employees/<name>')
-def getAllEmpByDept(name):
-   return jsonify(companyDao.getAllEmpByDept(str(name)))
+# curl http://127.0.0.1:5000/employees/dept/1
+@app.route('/employees/dept/<int:deptID>')
+def getAllEmpByDept(deptID):
+   return jsonify(companyDao.getAllEmpByDept(deptID))
 
 # create department
 # curl -X POST -d "{\"name\":\"hr\", \"location\":\"dublin\", \"budget\":100000}" -H "Content-Type:application/json" http://127.0.0.1:5000/departments
@@ -93,11 +93,11 @@ def updateDept(deptID):
    return jsonify(currentDept)
 
 #update employee
-# curl -X PUT -d "{\"name\":\"sue\", \"dept\":1, \"salary\":30000}" -H "content-type:application/json" http://127.0.0.1:5000/employees/2
+# curl -X PUT -d "{\"empID\": 3, \"name\": \"sean\", \"salary\": 30000, \"dept\": 1}" -H "content-type:application/json" http://127.0.0.1:5000/employees/2
 @app.route('/employees/<int:empID>', methods=['PUT'])
 def updateEmp(empID):
    foundEmp = companyDao.findEmpById(empID)
-   # print(foundEmp)
+   print(foundEmp)
    if foundEmp == {}:
       return jsonify({}), 404
    currentEmp = foundEmp
@@ -105,15 +105,15 @@ def updateEmp(empID):
       currentEmp['name'] = request.json['name']
    if 'address' in request.json:
       currentEmp['address'] = request.json['address']
-   if 'budget' in request.json:
-      currentEmp['budget'] = request.json['budget']
+   if 'salary' in request.json:
+      currentEmp['salary'] = request.json['salary']
    if 'dept' in request.json:
       # check if dept exists. deptID has to exist to assign an employee to a deptID
-      dept = request.json['dept']
-      checkDept = companyDao.findDeptById(dept)
+      deptID = request.json['dept']
+      checkDept = companyDao.findDeptById(deptID)
       if checkDept == {}:
          return jsonify({}), 404
-      currentEmp['dept'] = request.json['dept']
+      currentEmp['dept'] = deptID
    companyDao.updateEmp(currentEmp)
    return jsonify(currentEmp)
 
