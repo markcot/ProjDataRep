@@ -22,7 +22,7 @@
          </thead>
          <tr>
             <th scope="col">DeptID</th>
-            <td><input type="text" name="deptID" value="not available" readonly="readonly"></td>
+            <td><input type="text" class="form-control" name="deptID" placeholder="not available" readonly="readonly"></td>
          </tr>
          <tr>
             <th scope="col">Name</th>
@@ -34,7 +34,7 @@
          </tr>
          <tr>
             <th scope="col">Budget</th>
-            <td><input type="currency" name="budget"></td>
+            <td><input type="number" name="budget"></td>
          </tr>
          <tr>
             <td><button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button></td>
@@ -54,23 +54,23 @@
          </thead>
          <tr>
             <th scope="col">EmpID</th>
-            <td><input type="text" name="empID" value="not available" readonly="readonly"></td>
+            <td><input type="text" class="form-control" name="empID" placeholder="not available" readonly="readonly"></td>
          </tr>
          <tr>
             <th scope="col">Name</th>
-            <td><input type="text" name="name"></td>
+            <td><input type="text" class="form-control" name="name"></td>
          </tr>
          <tr>
             <th scope="col">Address</th>
-            <td><input type="text" name="address"></td>
+            <td><input type="text" class="form-control" name="address"></td>
          </tr>
          <tr>
             <th scope="col">Salary</th>
-            <td><input type="currency" name="salary"></td>
+            <td><input type="number" class="form-control" name="salary"></td>
          </tr>
          <tr>
             <th scope="col">Dept</th>
-            <td><input type="text" name="dept"></td>
+            <td><input type="number" class="form-control" name="dept"></td>
          </tr>
          <tr>
             <td><button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button></td>
@@ -150,11 +150,45 @@
 
       function doCreateDept() {
          dept = getDeptFromForm()
-         // showDeptDisplay()
+         $.ajax({
+            url: '/departments',
+            data: JSON.stringify(dept),
+            method: 'POST',
+            datatype: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+               console.log(result)
+               dept.deptID = result
+               addDepttoTable(dept)
+               showDeptDisplay()
+            },
+            error: function (xhr, status, error) {
+               console.log("error " + error + " code:" + status)
+            }
+         })
       }
 
       function doUpdateDept() {
          showDeptDisplay()
+      }
+
+      function doDeptDelete(thisElem){
+         var tableElement = document.getElementById('deptTable');
+         var rowElement = thisElem.parentNode.parentNode;
+         var index = rowElement.rowIndex;
+         // dept is dept table row id omitting the first character 'd'
+         dept = rowElement.getAttribute("id").substr(1);
+         $.ajax({
+            url:"/departments/"+dept,
+            method:"DELETE",
+            dateType:"JSON",
+            success:function(result){
+               tableElement.deleteRow(index);
+            },
+            error:function(xhr,status,error){
+               console.log(error)
+            }
+         })
       }
 
       function showEmpDisplay() {
@@ -175,11 +209,47 @@
 
       function doCreateEmp() {
          emp = getEmpFromForm()
-         // showEmpDisplay()
+         $.ajax({
+            url: '/employees',
+            data: JSON.stringify(emp),
+            method: 'POST',
+            datatype: 'JSON',
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+               console.log(result)
+               emp.empID = result
+               addEmptoTable(emp)
+               showEmpDisplay()
+            },
+            error: function (xhr, status, error) {
+               console.log("error " + error + " code:" + status)
+               // NOTE: deptID has to exist to assign an employee to a deptID
+               alert("Input error - Department not found")
+            }
+         })
       }
 
       function doUpdateEmp() {
          showEmpDisplay()
+      }
+
+      function doEmpDelete(thisElem){
+         var tableElement = document.getElementById('empTable');
+         var rowElement = thisElem.parentNode.parentNode;
+         var index = rowElement.rowIndex;
+         // emp is emp table row id omitting the first character 'e'
+         emp = rowElement.getAttribute("id").substr(1);
+         $.ajax({
+            url:"/employees/"+ emp,
+            method:"DELETE",
+            dateType:"JSON",
+            success:function(result){
+               tableElement.deleteRow(index);
+            },
+            error:function(xhr,status,error){
+               console.log(error)
+            }
+         })
       }
 
       function showHome() {
@@ -196,8 +266,8 @@
          dept.deptID = form.querySelector('input[name="deptID"]').value
          dept.name = form.querySelector('input[name="name"]').value
          dept.location = form.querySelector('input[name="location"]').value
-         dept.budget = form.querySelector('input[name="budget"]').value
-         console.log(dept)
+         dept.budget = parseInt(form.querySelector('input[name="budget"]').value)
+         // console.log(dept)
          return dept
       }
 
@@ -207,12 +277,11 @@
          emp.empID = form.querySelector('input[name="empID"]').value
          emp.name = form.querySelector('input[name="name"]').value
          emp.address = form.querySelector('input[name="address"]').value
-         emp.salary = form.querySelector('input[name="salary"]').value
-         emp.dept = form.querySelector('input[name="dept"]').value
-         console.log(emp)
+         emp.salary = parseInt(form.querySelector('input[name="salary"]').value)
+         emp.dept = parseInt(form.querySelector('input[name="dept"]').value)
+         // console.log(emp)
          return emp
       }
-
 
       function populateDeptTable(){
          // ajax getAllDept

@@ -91,17 +91,17 @@ print(returnValue)
 returnValue = companyDao.updateEmp(emp4)
 print(returnValue)
 
-# Delete table contents
-returnValue = companyDao.deleteDept(1)
-print(returnValue)
-returnValue = companyDao.deleteDept(2)
-print(returnValue)
-returnValue = companyDao.deleteEmp(1)
-print(returnValue)
-returnValue = companyDao.deleteEmp(2)
-print(returnValue)
-returnValue = companyDao.deleteEmp(3)
-print(returnValue)
+# # Delete table contents
+# returnValue = companyDao.deleteDept(1)
+# print(returnValue)
+# returnValue = companyDao.deleteDept(2)
+# print(returnValue)
+# returnValue = companyDao.deleteEmp(1)
+# print(returnValue)
+# returnValue = companyDao.deleteEmp(2)
+# print(returnValue)
+# returnValue = companyDao.deleteEmp(3)
+# print(returnValue)
 
 # Get all table contents
 returnValue = companyDao.getAllDept()

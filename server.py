@@ -108,7 +108,7 @@ def updateEmp(empID):
    if 'budget' in request.json:
       currentEmp['budget'] = request.json['budget']
    if 'dept' in request.json:
-      # check if dept exists
+      # check if dept exists. deptID has to exist to assign an employee to a deptID
       dept = request.json['dept']
       checkDept = companyDao.findDeptById(dept)
       if checkDept == {}:
