@@ -12,7 +12,10 @@
 <body>
 
    <div id="createUpdateDept" style="display:none">
-      <h2>Create / Update Department</h2>
+      <h2 id="titleCreateDept">Create Department</h2>
+      <h2 id="titleUpdateDept">Update Department</h2>
+      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+      <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
       <table id="createUpdateDeptForm" class="table">
          <thead class="thead-dark">
             <tr>
@@ -26,25 +29,31 @@
          </tr>
          <tr>
             <th scope="col">Name</th>
-            <td><input type="text" name="name"></td>
+            <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
          </tr>
          <tr>
             <th scope="col">Location</th>
-            <td><input type="text" name="location"></td>
+            <td><input type="text" class="form-control" name="location" placeholder="enter location" required></td>
          </tr>
          <tr>
             <th scope="col">Budget</th>
-            <td><input type="number" name="budget"></td>
+            <td><input type="number" class="form-control" name="budget" placeholder="enter budget in euro" required></td>
          </tr>
          <tr>
-            <td><button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button></td>
-            <td><button id="updateDept" onclick="doUpdateDept()"type="button" class="btn btn-info">Update</button></td>
+            <td></td>
+            <td>
+               <button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button>
+               <button id="updateDept" onclick="doUpdateDept()"type="button" class="btn btn-info">Update</button>
+            </td>
          </tr>
       </table>
    </div>
 
    <div id="createUpdateEmp" style="display:none">
-      <h2>Create / Update Employee</h2>
+      <h2 id="titleCreateEmp">Create Employee</h2>
+      <h2 id="titleUpdateEmp">Update Employee</h2>
+      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+      <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
       <table id="createUpdateEmpForm" class="table">
          <thead class="thead-dark">
             <tr>
@@ -58,23 +67,26 @@
          </tr>
          <tr>
             <th scope="col">Name</th>
-            <td><input type="text" class="form-control" name="name"></td>
+            <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
          </tr>
          <tr>
             <th scope="col">Address</th>
-            <td><input type="text" class="form-control" name="address"></td>
+            <td><input type="text" class="form-control" name="address" placeholder="enter address" required></td>
          </tr>
          <tr>
             <th scope="col">Salary</th>
-            <td><input type="number" class="form-control" name="salary"></td>
+            <td><input type="number" class="form-control" name="salary" placeholder="enter salary in euro" required></td>
          </tr>
          <tr>
             <th scope="col">Dept</th>
-            <td><input type="number" class="form-control" name="dept"></td>
+            <td><input type="number" class="form-control" name="dept" placeholder="enter dept ID number" required></td>
          </tr>
          <tr>
-            <td><button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button></td>
-            <td><button id="updateEmp" onclick="doUpdateEmp()" type="button" class="btn btn-info">Update</button></td>
+            <td></td>
+            <td>
+               <button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button>
+               <button id="updateEmp" onclick="doUpdateEmp()" type="button" class="btn btn-info">Update</button>
+            </td>
          </tr>
       </table>
    </div>
@@ -146,6 +158,92 @@
          document.getElementById('displayEmp').style.display = "none"
          document.getElementById('createUpdateDept').style.display = "block"
          document.getElementById('createUpdateEmp').style.display = "none"
+         // title
+         document.getElementById('titleCreateDept').style.display = "block"
+         document.getElementById('titleUpdateDept').style.display = "none"
+         // buttons
+         document.getElementById('createDept').style.display = "block"
+         document.getElementById('updateDept').style.display = "none"
+      }
+
+      function showDeptUpdate(thisElem) {
+         var rowElement = thisElem.parentNode.parentNode;
+         dept = readDeptFromRow(rowElement)
+         populateDeptForm(dept)
+
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "block"
+         document.getElementById('createUpdateEmp').style.display = "none"
+         // title
+         document.getElementById('titleCreateDept').style.display = "none"
+         document.getElementById('titleUpdateDept').style.display = "block"
+         // buttons
+         document.getElementById('createDept').style.display = "none"
+         document.getElementById('updateDept').style.display = "block"
+      }
+
+      function readDeptFromRow(rowElement) {
+         dept = {}
+         // deptID is dept table row id omitting the first character 'd'
+         dept.deptID = rowElement.getAttribute("id").substr(1);
+         dept.name = rowElement.cells[1].firstChild.textContent
+         dept.location = rowElement.cells[2].firstChild.textContent
+         dept.budget = rowElement.cells[3].firstChild.textContent
+         return dept
+      }
+      function populateDeptForm(dept) {
+         var form = document.getElementById('createUpdateDeptForm')
+
+         form.querySelector('input[name="deptID"]').value = dept.deptID
+         form.querySelector('input[name="deptID"]').disabled = true
+
+         form.querySelector('input[name="name"]').value = dept.name
+         form.querySelector('input[name="location"]').value = dept.location
+         form.querySelector('input[name="budget"]').value = dept.budget
+      }
+      function clearDeptForm() {
+         var form = document.getElementById('createUpdateDeptForm')
+
+         form.querySelector('input[name="deptID"]').value = ''
+         form.querySelector('input[name="deptID"]').disabled = true
+
+         form.querySelector('input[name="name"]').value = ''
+         form.querySelector('input[name="location"]').value = ''
+         form.querySelector('input[name="budget"]').value = ''
+      }
+
+      function doUpdateDept() {
+         dept = getDeptFromForm()
+         updateDeptServer(dept)         
+      }
+
+      function updateDeptServer(dept) {
+         $.ajax({
+            url: "/departments/" + dept.deptID,
+            data: JSON.stringify(dept),
+            method: "PUT",
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+               console.log(result)
+               updateDeptTableRow(dept)
+               showDeptDisplay()
+               clearDeptForm()
+            },
+            error: function (xhr, status, error) {
+               console.log("error" + error)
+            }
+         })
+      }
+
+      function updateDeptTableRow(dept) {
+         rowElement = document.getElementById("d" + dept.deptID)
+         rowElement.cells[1].firstChild.textContent = dept.name
+         rowElement.cells[2].firstChild.textContent = dept.location
+         rowElement.cells[3].firstChild.textContent = dept.budget
+         //console.log("updating dept table")
       }
 
       function doCreateDept() {
@@ -161,22 +259,19 @@
                dept.deptID = result
                addDepttoTable(dept)
                showDeptDisplay()
+               clearDeptForm()
             },
             error: function (xhr, status, error) {
-               console.log("error " + error + " code:" + status)
+               console.log("error " + error)
             }
          })
-      }
-
-      function doUpdateDept() {
-         showDeptDisplay()
       }
 
       function doDeptDelete(thisElem){
          var tableElement = document.getElementById('deptTable');
          var rowElement = thisElem.parentNode.parentNode;
          var index = rowElement.rowIndex;
-         // dept is dept table row id omitting the first character 'd'
+         // deptID is dept table row id omitting the first character 'd'
          dept = rowElement.getAttribute("id").substr(1);
          $.ajax({
             url:"/departments/"+dept,
@@ -184,6 +279,7 @@
             dateType:"JSON",
             success:function(result){
                tableElement.deleteRow(index);
+               console.log("Department " + dept + " deleted")
             },
             error:function(xhr,status,error){
                console.log(error)
@@ -205,6 +301,99 @@
          document.getElementById('displayEmp').style.display = "none"
          document.getElementById('createUpdateDept').style.display = "none"
          document.getElementById('createUpdateEmp').style.display = "block"
+         // title
+         document.getElementById('titleCreateEmp').style.display = "block"
+         document.getElementById('titleUpdateEmp').style.display = "none"
+         // buttons
+         document.getElementById('createEmp').style.display = "block"
+         document.getElementById('updateEmp').style.display = "none"
+      }
+
+      function showEmpUpdate(thisElem) {
+         var rowElement = thisElem.parentNode.parentNode;
+         emp = readEmpFromRow(rowElement)
+         populateEmpForm(emp)
+
+         document.getElementById('displayHome').style.display = "none"
+         document.getElementById('displayDept').style.display = "none"
+         document.getElementById('displayEmp').style.display = "none"
+         document.getElementById('createUpdateDept').style.display = "none"
+         document.getElementById('createUpdateEmp').style.display = "block"
+         // title
+         document.getElementById('titleCreateEmp').style.display = "none"
+         document.getElementById('titleUpdateEmp').style.display = "block"
+         // buttons
+         document.getElementById('createEmp').style.display = "none"
+         document.getElementById('updateEmp').style.display = "block"
+      }
+
+      function readEmpFromRow(rowElement) {
+         emp = {}
+         // empID is emp table row id omitting the first character 'e'
+         emp.empID = rowElement.getAttribute("id").substr(1);
+         emp.name = rowElement.cells[1].firstChild.textContent
+         emp.address = rowElement.cells[2].firstChild.textContent
+         emp.salary = rowElement.cells[3].firstChild.textContent
+         emp.dept = rowElement.cells[4].firstChild.textContent
+         return emp
+      }
+
+      function populateEmpForm(emp) {
+         var form = document.getElementById('createUpdateEmpForm')
+
+         form.querySelector('input[name="empID"]').value = emp.empID
+         form.querySelector('input[name="empID"]').disabled = true
+
+         form.querySelector('input[name="name"]').value = emp.name
+         form.querySelector('input[name="address"]').value = emp.address
+         form.querySelector('input[name="salary"]').value = emp.salary
+         form.querySelector('input[name="dept"]').value = emp.dept
+      }
+      function clearEmpForm() {
+         var form = document.getElementById('createUpdateEmpForm')
+
+         form.querySelector('input[name="empID"]').value = ''
+         form.querySelector('input[name="empID"]').disabled = true
+
+         form.querySelector('input[name="name"]').value = ''
+         form.querySelector('input[name="address"]').value = ''
+         form.querySelector('input[name="salary"]').value = ''
+         form.querySelector('input[name="dept"]').value = ''
+      }
+
+      function doUpdateEmp() {
+         emp = getEmpFromForm()
+         updateEmpServer(emp)       
+      }
+
+      function updateEmpServer(emp) {
+         $.ajax({
+            url: "/employees/" + emp.empID,
+            data: JSON.stringify(emp),
+            method: "PUT",
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+               console.log(result)
+               updateEmpTableRow(emp)
+               showEmpDisplay()
+               clearEmpForm()
+            },
+            error: function (xhr, status, error) {
+               console.log("error" + error)
+               // NOTE: deptID has to exist to assign an employee to a deptID
+               alert("INPUT ERROR: Department ID not found")
+            }
+         })
+      }
+
+      function updateEmpTableRow(emp) {
+         rowElement = document.getElementById("e" + emp.empID)
+         rowElement.cells[1].firstChild.textContent = emp.name
+         rowElement.cells[2].firstChild.textContent = emp.address
+         rowElement.cells[3].firstChild.textContent = emp.salary
+         rowElement.cells[4].firstChild.textContent = emp.dept
+         //console.log("updating emp table")
       }
 
       function doCreateEmp() {
@@ -220,24 +409,21 @@
                emp.empID = result
                addEmptoTable(emp)
                showEmpDisplay()
+               clearEmpForm()
             },
             error: function (xhr, status, error) {
-               console.log("error " + error + " code:" + status)
+               console.log("error " + error)
                // NOTE: deptID has to exist to assign an employee to a deptID
-               alert("Input error - Department not found")
+               alert("INPUT ERROR: Department ID not found")
             }
          })
-      }
-
-      function doUpdateEmp() {
-         showEmpDisplay()
       }
 
       function doEmpDelete(thisElem){
          var tableElement = document.getElementById('empTable');
          var rowElement = thisElem.parentNode.parentNode;
          var index = rowElement.rowIndex;
-         // emp is emp table row id omitting the first character 'e'
+         // empID is emp table row id omitting the first character 'e'
          emp = rowElement.getAttribute("id").substr(1);
          $.ajax({
             url:"/employees/"+ emp,
@@ -245,6 +431,7 @@
             dateType:"JSON",
             success:function(result){
                tableElement.deleteRow(index);
+               console.log("Employee " + emp + " deleted")
             },
             error:function(xhr,status,error){
                console.log(error)
