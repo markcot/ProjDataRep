@@ -22,3 +22,11 @@ CREATE TABLE employees(
 		REFERENCES departments(deptID)
         ON DELETE RESTRICT
     );
+
+INSERT INTO departments (name, location, budget) VALUES ("hr", "dublin", 100000);
+INSERT INTO departments (name, location, budget) VALUES ("sales", "kilkenny", 250000);
+INSERT INTO departments (name, location, budget) VALUES ("it", "meath", 70000);
+INSERT INTO employees (name, address, salary, dept) VALUES ("mary", "dublin", 60100, 1);
+INSERT INTO employees (name, address, salary, dept) VALUES ("tom", "wicklow", 57000, 2);
+INSERT INTO employees (name, address, salary, dept) VALUES ("sarah", "carlow", 42000, 2);
+INSERT INTO employees (name, address, salary, dept) VALUES ("simon", "galway", 45000, 3);
