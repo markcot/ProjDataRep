@@ -223,8 +223,9 @@
 
       function updateDeptServer(dept) {
          // ajax updateDept
+         host = window.location.origin
          $.ajax({
-            url: "/departments/" + dept.deptID,
+            url: host + "/departments/" + dept.deptID,
             data: JSON.stringify(dept),
             method: "PUT",
             dataType: "JSON",
@@ -252,8 +253,9 @@
       function doCreateDept() {
          dept = getDeptFromForm()
          // ajax createDept
+         host = window.location.origin
          $.ajax({
-            url: '/departments',
+            url: host + '/departments',
             data: JSON.stringify(dept),
             method: 'POST',
             datatype: 'JSON',
@@ -278,8 +280,9 @@
          // deptID is dept table row id omitting the first character 'd'
          var dept = rowElement.getAttribute("id").substr(1);
          // ajax deleteDept
+         host = window.location.origin
          $.ajax({
-            url:"/departments/"+dept,
+            url: host + "/departments/"+dept,
             method:"DELETE",
             dateType:"JSON",
             success:function(result){
@@ -378,8 +381,9 @@
 
       function updateEmpServer(emp) {
          // ajax updateEmp
+         host = window.location.origin
          $.ajax({
-            url: "/employees/" + emp.empID,
+            url: host + "/employees/" + emp.empID,
             data: JSON.stringify(emp),
             method: "PUT",
             dataType: "JSON",
@@ -410,8 +414,9 @@
       function doCreateEmp() {
          emp = getEmpFromForm()
          // ajax createEmp
+         host = window.location.origin
          $.ajax({
-            url: '/employees',
+            url: host + '/employees',
             data: JSON.stringify(emp),
             method: 'POST',
             datatype: 'JSON',
@@ -438,8 +443,9 @@
          // empID is emp table row id omitting the first character 'e'
          emp = rowElement.getAttribute("id").substr(1);
          // ajax deleteEmp
+         host = window.location.origin
          $.ajax({
-            url:"/employees/"+ emp,
+            url: host + "/employees/"+ emp,
             method:"DELETE",
             dateType:"JSON",
             success:function(result){
@@ -485,8 +491,9 @@
 
       function populateDeptTable(){
          // ajax getAllDept
+         host = window.location.origin
          $.ajax({
-            url: '/departments',
+            url: host + '/departments',
             method: 'GET',
             datatype: 'JSON',
             success: function (results) {
@@ -502,8 +509,9 @@
 
       function populateEmpTable(){
          // ajax getAllEmp
+         host = window.location.origin
          $.ajax({
-            url: '/employees',
+            url: host + '/employees',
             method: 'GET',
             datatype: 'JSON',
             success: function (results) {
