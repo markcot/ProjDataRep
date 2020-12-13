@@ -48,3 +48,6 @@ Conda was used to create a virtual environment (venv) for the server to run on u
 
 The package requirements can also be install from the list in the file 'requirement.txt' using the venv command
 * (venv)λ pip install -r requirements.txt
+
+### Deployment to pythonanywhere.com
+The database has been deployed to pythonanywhere at the address http://markcotter.pythonanywhere.com/index.html.
