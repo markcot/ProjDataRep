@@ -33,15 +33,15 @@ A HTML user interface page 'Index.html' is included the 'staticpages' folder. Th
 ### Virtual environment
 Conda was used to create a virtual environment (venv) for the server to run on using the following command line commands to create the venv, install and save packages for the venv, set the flask_app server and server mode, run the server, stop the server and finally deactivate the venv.
 
-λ conda create --name venv python=3.8
-λ conda activate venv
-(venv)λ pip install Flask
-(venv)λ pip install mysql
-(venv)λ pip install mysql-connector
-(venv)λ pip install mysql-connector-python
-(venv)λ pip freeze > requirements.txt
-(venv)λ set FLASK_APP=server
-(venv)λ set FLASK_ENV=development
-(venv)λ flask run
-Crtl+c
-(venv)λ conda deactivate
+* λ conda create --name venv python=3.8
+* λ conda activate venv
+* (venv)λ pip install Flask
+* (venv)λ pip install mysql
+* (venv)λ pip install mysql-connector
+* (venv)λ pip install mysql-connector-python
+* (venv)λ pip freeze > requirements.txt
+* (venv)λ set FLASK_APP=server
+* (venv)λ set FLASK_ENV=development
+* (venv)λ flask run
+* Crtl+c
+* (venv)λ conda deactivate
