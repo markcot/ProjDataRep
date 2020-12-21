@@ -2,30 +2,35 @@ import mysql.connector
 import dbconfig as cfg
 
 class CompanyDao:
-   db = ""
 
-   # Create database connection
-   def connectToDB(self):
-      self.db = mysql.connector.connect(
+   # Create database connection pool
+   def initConnectToDB(self):
+      db = mysql.connector.connect(
          host=cfg.mysql['host'],
          user=cfg.mysql['username'],
          password=cfg.mysql['password'],
-         database=cfg.mysql['database']
+         database=cfg.mysql['database'],
+         pool_name='my_connection_pool',
+         pool_size=5
       )
-      #print ("connection made")
+      return db
 
+   # Get a connection from the pool
+   def getConnection(self):
+      db = mysql.connector.connect(
+         pool_name='my_connection_pool'
+      )
+      return db
+
+   # Initialise DB connection pool
    def __init__(self):
-      self.connectToDB()
-
-   # check if connection to DB is made. If not connected make connection
-   def getCursor(self):
-      if not self.db.is_connected():
-         self.connectToDB()
-      return self.db.cursor()
+      db = self.initConnectToDB()
+      db.close()
 
    # Create department
    def createDept(self, dept):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = "insert into departments (name, location, budget) values (%s,%s,%s)"
       values = [
          # dept['deptID'], - auto-increment
@@ -34,15 +39,16 @@ class CompanyDao:
          dept['budget']
       ]
       cursor.execute(sql, values)
-      self.db.commit()
+      db.commit()
       lastRowId = cursor.lastrowid
-      cursor.close()
+      db.close()
       return lastRowId
       # return dept['deptID']
 
    # Create employee
    def createEmp(self, emp):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = "insert into employees (name, address, salary, dept) values (%s,%s,%s,%s)"
       values = [
          # emp['empID'], - auto-increment
@@ -52,15 +58,16 @@ class CompanyDao:
          emp['dept']
       ]
       cursor.execute(sql, values)
-      self.db.commit()
+      db.commit()
       lastRowId = cursor.lastrowid
-      cursor.close()
+      db.close()
       return lastRowId
       # return emp['empID']
 
    # Return info on all departments
    def getAllDept(self):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'select * from departments'
       cursor.execute(sql)
       results = cursor.fetchall()
@@ -69,12 +76,13 @@ class CompanyDao:
       for result in results:
          resultAsDict = self.convertDeptToDict(result)
          returnArray.append(resultAsDict)
-      cursor.close()
+      db.close()
       return returnArray
 
    # Return info on all employees
    def getAllEmp(self):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'select * from employees'
       cursor.execute(sql)
       results = cursor.fetchall()
@@ -83,34 +91,37 @@ class CompanyDao:
       for result in results:
          resultAsDict = self.convertEmpToDict(result)
          returnArray.append(resultAsDict)
-      cursor.close()
+      db.close()
       return returnArray
 
    # Return info on department for given deptID
    def findDeptById(self, deptID):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'select * from departments where deptID = %s'
       values = [deptID]
       cursor.execute(sql, values)
       result = cursor.fetchone()
       dept = self.convertDeptToDict(result)
-      cursor.close()
+      db.close()
       return dept
 
    # Return info on employee for given empID
    def findEmpById(self, empID):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'select * from employees where empID = %s'
       values = [empID]
       cursor.execute(sql, values)
       result = cursor.fetchone()
       emp = self.convertEmpToDict(result)
-      cursor.close()
+      db.close()
       return emp
 
    # Return info on all employees from a given department ID
    def getAllEmpByDept(self, deptID):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'select * from employees where dept = %s;'
       values = [deptID]
       cursor.execute(sql, values)
@@ -120,12 +131,13 @@ class CompanyDao:
       for result in results:
          resultAsDict = self.convertEmpToDict(result)
          returnArray.append(resultAsDict)
-      cursor.close()
+      db.close()
       return returnArray
 
    # Update department info for given deptID
    def updateDept(self, dept):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = "update departments set name = %s, location = %s, budget = %s where deptID = %s"
       values = [
          dept['name'],
@@ -134,13 +146,14 @@ class CompanyDao:
          dept['deptID']
       ]
       cursor.execute(sql, values)
-      self.db.commit()
-      cursor.close()
+      db.commit()
+      db.close()
       return dept
 
    # Update employee info for given empID
    def updateEmp(self, emp):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = "update employees set name = %s, address = %s, salary = %s, dept = %s where empID = %s"
       values = [
          emp['name'],
@@ -150,28 +163,30 @@ class CompanyDao:
          emp['empID']
       ]
       cursor.execute(sql, values)
-      self.db.commit()
-      cursor.close()
+      db.commit()
+      db.close()
       return emp
 
    # Delete department for given deptID
    def deleteDept(self, deptID):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'delete from departments where deptID = %s'
       values = [deptID]
       cursor.execute(sql, values)
-      self.db.commit()
-      cursor.close()
+      db.commit()
+      db.close()
       return {}
 
    # Delete employee for given empID
    def deleteEmp(self, empID):
-      cursor = self.getCursor()
+      db = self.getConnection()
+      cursor = db.cursor()
       sql = 'delete from employees where empID = %s'
       values = [empID]
       cursor.execute(sql, values)
-      self.db.commit()
-      cursor.close()
+      db.commit()
+      db.close()
       return {}
 
    # Function to convert department into Dictionary/JSON
