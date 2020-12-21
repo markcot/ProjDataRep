@@ -50,4 +50,4 @@ The package requirements can also be install from the list in the file 'requirem
 * (venv)λ pip install -r requirements.txt
 
 ### Deployment to pythonanywhere.com
-The database has been deployed to pythonanywhere at the address http://markcotter.pythonanywhere.com/index.html.
+The database has been deployed to pythonanywhere at the address http://markcotter.pythonanywhere.com/.

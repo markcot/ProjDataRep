@@ -3,43 +3,44 @@ from CompanyDao import companyDao
 
 app = Flask(__name__, static_url_path='', static_folder='staticpages')
 
-# Root welcome note
+# Root route
 # curl http://127.0.0.1:5000/
 @app.route('/')
 def index():
-   return "hello"
+   # return "hello"
+   return app.send_static_file('index.html')
 
-#get all departments
+#get all departments route
 # curl http://127.0.0.1:5000/departments
 @app.route('/departments')
 def getAllDept():
    return jsonify(companyDao.getAllDept())
 
-#get all employees
+#get all employees route
 # curl http://127.0.0.1:5000/employees
 @app.route('/employees')
 def getAllEmp():
    return jsonify(companyDao.getAllEmp())
 
-# find By department id
+# find By department id route
 # curl http://127.0.0.1:5000/departments/1
 @app.route('/departments/<int:deptID>')
 def findDeptById(deptID):
    return jsonify(companyDao.findDeptById(deptID))
 
-# find By employee id
+# find By employee id route
 # curl http://127.0.0.1:5000/employees/1
 @app.route('/employees/<int:empID>')
 def findEmpById(empID):
    return jsonify(companyDao.findEmpById(empID))
 
-#get all employees by department id
+#get all employees by department id route
 # curl http://127.0.0.1:5000/employees/dept/1
 @app.route('/employees/dept/<int:deptID>')
 def getAllEmpByDept(deptID):
    return jsonify(companyDao.getAllEmpByDept(deptID))
 
-# create department
+# create department route
 # curl -X POST -d "{\"name\":\"hr\", \"location\":\"dublin\", \"budget\":100000}" -H "Content-Type:application/json" http://127.0.0.1:5000/departments
 # curl -X POST -d "{\"name\":\"sales\", \"location\":\"kilkenny\", \"budget\":250000}" -H "Content-Type:application/json" http://127.0.0.1:5000/departments
 @app.route('/departments', methods=['POST'])
@@ -53,7 +54,7 @@ def createDept():
    }
    return jsonify(companyDao.createDept(dept))
 
-# create employee
+# create employee route
 # curl -X POST -d "{\"name\":\"mary\", \"address\":\"dublin\", \"salary\":60100, \"dept\":1}" -H "Content-Type:application/json" http://127.0.0.1:5000/employees
 # curl -X POST -d "{\"name\":\"tom\", \"address\":\"wicklow\", \"salary\":57000, \"dept\":1}" -H "Content-Type:application/json" http://127.0.0.1:5000/employees
 # curl -X POST -d "{\"name\":\"sarah\", \"address\":\"carlow\", \"salary\":42000, \"dept\":2}" -H "Content-Type:application/json" http://127.0.0.1:5000/employees
@@ -74,7 +75,7 @@ def createEmp():
    }
    return jsonify(companyDao.createEmp(emp))
 
-#update department
+#update department route
 # curl -X PUT -d "{\"name\":\"it\", \"budget\":200000}" -H "content-type:application/json" http://127.0.0.1:5000/departments/2
 @app.route('/departments/<int:deptID>', methods=['PUT'])
 def updateDept(deptID):
@@ -92,7 +93,7 @@ def updateDept(deptID):
    companyDao.updateDept(currentDept)
    return jsonify(currentDept)
 
-#update employee
+#update employee route
 # curl -X PUT -d "{\"empID\": 3, \"name\": \"sean\", \"salary\": 30000, \"dept\": 1}" -H "content-type:application/json" http://127.0.0.1:5000/employees/2
 @app.route('/employees/<int:empID>', methods=['PUT'])
 def updateEmp(empID):
@@ -117,7 +118,7 @@ def updateEmp(empID):
    companyDao.updateEmp(currentEmp)
    return jsonify(currentEmp)
 
-#delete department
+#delete department route
 # curl -X DELETE http://127.0.0.1:5000/departments/1
 @app.route('/departments/<int:deptID>', methods=['DELETE'])
 def deleteDept(deptID):
@@ -128,7 +129,7 @@ def deleteDept(deptID):
    companyDao.deleteDept(deptID)
    return jsonify({"done": True})
 
-#delete employee
+#delete employee route
 # curl -X DELETE http://127.0.0.1:5000/employees/1
 @app.route('/employees/<int:empID>', methods=['DELETE'])
 def deleteEmp(empID):
