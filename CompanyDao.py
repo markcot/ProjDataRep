@@ -7,10 +7,10 @@ class CompanyDao:
    # Create database connection
    def connectToDB(self):
       self.db = mysql.connector.connect(
-          host=cfg.mysql['host'],
-          user=cfg.mysql['username'],
-          password=cfg.mysql['password'],
-          database=cfg.mysql['database']
+         host=cfg.mysql['host'],
+         user=cfg.mysql['username'],
+         password=cfg.mysql['password'],
+         database=cfg.mysql['database']
       )
       #print ("connection made")
 
@@ -28,10 +28,10 @@ class CompanyDao:
       cursor = self.getCursor()
       sql = "insert into departments (name, location, budget) values (%s,%s,%s)"
       values = [
-          # dept['deptID'], - auto-increment
-          dept['name'],
-          dept['location'],
-          dept['budget']
+         # dept['deptID'], - auto-increment
+         dept['name'],
+         dept['location'],
+         dept['budget']
       ]
       cursor.execute(sql, values)
       self.db.commit()
@@ -45,11 +45,11 @@ class CompanyDao:
       cursor = self.getCursor()
       sql = "insert into employees (name, address, salary, dept) values (%s,%s,%s,%s)"
       values = [
-          # emp['empID'], - auto-increment
-          emp['name'],
-          emp['address'],
-          emp['salary'],
-          emp['dept']
+         # emp['empID'], - auto-increment
+         emp['name'],
+         emp['address'],
+         emp['salary'],
+         emp['dept']
       ]
       cursor.execute(sql, values)
       self.db.commit()
@@ -128,10 +128,10 @@ class CompanyDao:
       cursor = self.getCursor()
       sql = "update departments set name = %s, location = %s, budget = %s where deptID = %s"
       values = [
-          dept['name'],
-          dept['location'],
-          dept['budget'],
-          dept['deptID']
+         dept['name'],
+         dept['location'],
+         dept['budget'],
+         dept['deptID']
       ]
       cursor.execute(sql, values)
       self.db.commit()
@@ -143,11 +143,11 @@ class CompanyDao:
       cursor = self.getCursor()
       sql = "update employees set name = %s, address = %s, salary = %s, dept = %s where empID = %s"
       values = [
-          emp['name'],
-          emp['address'],
-          emp['salary'],
-          emp['dept'],
-          emp['empID']
+         emp['name'],
+         emp['address'],
+         emp['salary'],
+         emp['dept'],
+         emp['empID']
       ]
       cursor.execute(sql, values)
       self.db.commit()
@@ -193,6 +193,5 @@ class CompanyDao:
             value = result[i]
             emp[colName] = value
       return emp
-
 
 companyDao = CompanyDao()

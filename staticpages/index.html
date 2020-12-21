@@ -218,7 +218,9 @@
 
       function doUpdateDept() {
          dept = getDeptFromForm()
-         updateDeptServer(dept)         
+         if (validateDeptForm(dept) == 1) {
+            updateDeptServer(dept)         
+         }
       }
 
       function updateDeptServer(dept) {
@@ -252,25 +254,28 @@
 
       function doCreateDept() {
          dept = getDeptFromForm()
-         // ajax createDept
-         host = window.location.origin
-         $.ajax({
-            url: host + '/departments',
-            data: JSON.stringify(dept),
-            method: 'POST',
-            datatype: 'JSON',
-            contentType: "application/json; charset=utf-8",
-            success: function (result) {
-               console.log("Department " + result + " added")
-               dept.deptID = result
-               addDepttoTable(dept)
-               showDeptDisplay()
-               clearDeptForm()
-            },
-            error: function (xhr, status, error) {
-               console.log("error " + error)
-            }
-         })
+         if (validateDeptForm(dept) == 1) {
+            // ajax createDept
+            host = window.location.origin
+            $.ajax({
+               url: host + '/departments',
+               data: JSON.stringify(dept),
+               method: 'POST',
+               datatype: 'JSON',
+               contentType: "application/json; charset=utf-8",
+               success: function (result) {
+                  console.log("Department " + result + " added")
+                  dept.deptID = result
+                  addDepttoTable(dept)
+                  showDeptDisplay()
+                  clearDeptForm()
+               },
+               error: function (xhr, status, error) {
+                  console.log("error " + error)
+               }
+            })
+         }
+
       }
 
       function doDeptDelete(thisElem){
@@ -376,7 +381,9 @@
       function doUpdateEmp() {
          emp = getEmpFromForm()
          // console.log(emp)
-         updateEmpServer(emp)       
+         if (validateEmpForm(emp) == 1) {
+            updateEmpServer(emp)       
+         }
       }
 
       function updateEmpServer(emp) {
@@ -413,27 +420,29 @@
 
       function doCreateEmp() {
          emp = getEmpFromForm()
-         // ajax createEmp
-         host = window.location.origin
-         $.ajax({
-            url: host + '/employees',
-            data: JSON.stringify(emp),
-            method: 'POST',
-            datatype: 'JSON',
-            contentType: "application/json; charset=utf-8",
-            success: function (result) {
-               console.log("Employee " + result + " created")
-               emp.empID = result
-               addEmptoTable(emp)
-               showEmpDisplay()
-               clearEmpForm()
-            },
-            error: function (xhr, status, error) {
-               console.log("error " + error)
-               // NOTE: deptID has to exist to assign an employee to a deptID
-               alert("INPUT ERROR: Department ID not found")
-            }
-         })
+         if (validateEmpForm(emp) == 1) {
+            // ajax createEmp
+            host = window.location.origin
+            $.ajax({
+               url: host + '/employees',
+               data: JSON.stringify(emp),
+               method: 'POST',
+               datatype: 'JSON',
+               contentType: "application/json; charset=utf-8",
+               success: function (result) {
+                  console.log("Employee " + result + " created")
+                  emp.empID = result
+                  addEmptoTable(emp)
+                  showEmpDisplay()
+                  clearEmpForm()
+               },
+               error: function (xhr, status, error) {
+                  console.log("error " + error)
+                  // NOTE: deptID has to exist to assign an employee to a deptID
+                  alert("INPUT ERROR: Department ID not found")
+               }
+            })
+         }
       }
 
       function doEmpDelete(thisElem){
@@ -477,6 +486,16 @@
          return dept
       }
 
+      function validateDeptForm(d){
+         // Check if and department form fields are are empty. Code adapted from
+         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
+         if (d.name.length == 0 || d.location.length == 0 || Number.isNaN(d.budget) == true ){
+            alert("INPUT ERROR: Blank department form field entered")
+            return 0
+         }
+         return 1
+      }
+
       function getEmpFromForm(){
          var form = document.getElementById('createUpdateEmpForm')
          var emp = {}
@@ -487,6 +506,15 @@
          emp.dept = parseInt(form.querySelector('input[name="dept"]').value)
          // console.log(emp)
          return emp
+      }
+
+      function validateEmpForm(e){
+         // Check if any employee form fields are empty
+         if (e.name.length == 0 || e.address.length == 0 || Number.isNaN(e.salary) == true || Number.isNaN(e.dept) == true){
+            alert("INPUT ERROR: Blank employee form field entered")
+            return 0
+         }
+         return 1
       }
 
       function populateDeptTable(){
