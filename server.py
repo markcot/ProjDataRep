@@ -105,7 +105,7 @@ def createUser():
 # curl -X PUT -d "{\"name\":\"it\", \"budget\":200000}" -H "content-type:application/json" http://127.0.0.1:5000/departments/2
 @app.route('/departments/<int:deptID>', methods=['PUT'])
 def updateDept(deptID):
-   # foundDept = companyDao.findDeptById(deptID)
+   foundDept = companyDao.findDeptById(deptID)
    # print(foundDept)
    if foundDept == {}:
       return jsonify({}), 404
