@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <title>Login</title>
+   <meta charset="UTF-8">
+   <meta name="description" content="enter login details">
+   <meta name="keywords" content="Galway, ICT, Department, Employee, Records">
+   <meta name="author" content="Mark Cotter">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class="p-3 mb-2 bg-light text-dark">
+   <!-- Webpage Company Title -->
+   <h1 class="h1">Galway ICT Ltd</h1>
+   <hr>
+   <!-- Login Screen Form with required fields to be entered
+		 Code adapted from https://www.w3schools.com/tags/att_form_action.asp
+		 & https://www.w3schools.com/tags/att_input_required.asp
+       & https://css-tricks.com/a-complete-guide-to-links-and-buttons/ &
+       https://getbootstrap.com/docs/4.3/components/forms/? -->
+   <form id="login">
+      <div class="form-group">
+         <legend class="form-label">User Login</legend>
+      </div>
+      <div class="form-group row">
+         <label for="username" class="col-sm-1 col-form-label">User:</label>
+         <div class="col-sm-10">
+            <input id="uname" type="text" name="username" class="form-control" placeholder="enter user name" required>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label for="password" class="col-sm-1 col-form-label">Password:</label>
+         <div class="col-sm-10">
+            <input id="pword" type="password" name="password" class="form-control" placeholder="enter password" required>
+         </div>
+      </div>
+      <div class="form-group">
+         <input id="loginEex" type="submit" class="btn btn-primary" value="Login" onclick="validateDetails()">
+      </div>
+   </form>
+   <hr>
+
+   <script>
+      // Dictionary for storing user data
+      var uData = [];
+
+      // For testing of data import
+      getAllUserData()
+
+      // Get User Data
+      function getAllUserData() {
+         // ajax getAllUser
+         host = window.location.origin
+         $.ajax({
+            url: host + '/u',
+            method: 'GET',
+            datatype: 'JSON',
+            success: function (results) {
+                  // console.log(results);
+                  uData = results;
+            },
+            error: function (xhr, status, error) {
+               console.log("error " + error + " code:" + status)
+            }
+         })
+      }
+
+      // Validate and check user details
+      function validateDetails() {
+
+         // Get details from form
+         var loginForm = document.getElementById("login");
+         var uname = document.getElementById("uname").value;
+         var pword = document.getElementById("pword").value;
+
+         // Set variable for checking submit, user and password are acceptable
+         var submitOK = "false";
+         var unameOK = "false";
+         var unameArr = "";
+         var pwordArr = "";
+
+         // Count data points in user data search it for the name
+         var dataCount = uData.length;
+         for (var i = 0; i < dataCount; i++) {
+            if (uname.toLowerCase() == uData[i].name.toLowerCase()) {
+               unameArr = uData[i].name;
+               pwordArr = uData[i].password;
+               unameOK = "true";
+            }
+         }
+
+         // Check user name entered into form
+         if (uname == "") {
+            alert("User name cannot be empty");
+            submitOK = "false";
+         } else if (unameOK == "false") {
+            alert("Username " + uname + " not found");
+            submitOK = "false";
+
+            // Check password entered into form for user
+         } else if (pword == "") {
+            alert("Password cannot be empty");
+            submitOK = "false";
+         } else if (pword != pwordArr) {
+            alert("Password incorrect for user " + unameArr);
+            submitOK = "false";
+
+            // All checked user details are ok
+         } else {
+            submitOK = "true";
+         }
+
+         // Check if submitted user detail are acceptable.
+         if (submitOK == "false") {// If details not acceptable
+            return false;
+         } else {
+            // Use login form to open the index page.
+            host = window.location.origin
+            loginForm.action = host + "/index.html";
+         }
+      }
+
+   </script>
+
+</body>
+
+</html>
+

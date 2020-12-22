@@ -64,6 +64,22 @@ class CompanyDao:
       return lastRowId
       # return emp['empID']
 
+   # Create user
+   def createUser(self, u):
+      db = self.getConnection()
+      cursor = db.cursor()
+      sql = "insert into users (name, password) values (%s,%s)"
+      values = [
+         # u['userID'], - auto-increment
+         u['name'],
+         u['password'],
+      ]
+      cursor.execute(sql, values)
+      db.commit()
+      lastRowId = cursor.lastrowid
+      db.close()
+      return lastRowId
+
    # Return info on all departments
    def getAllDept(self):
       db = self.getConnection()
@@ -94,6 +110,22 @@ class CompanyDao:
       db.close()
       return returnArray
 
+   # Return all user info
+   def getAllUser(self):
+      db = self.getConnection()
+      cursor = db.cursor()
+      sql = 'select * from users'
+      cursor.execute(sql)
+      results = cursor.fetchall()
+      returnArray = []
+      # print(results)
+      for result in results:
+         resultAsDict = self.convertUserToDict(result)
+         print(result)
+         returnArray.append(resultAsDict)
+      db.close()
+      return returnArray
+
    # Return info on department for given deptID
    def findDeptById(self, deptID):
       db = self.getConnection()
@@ -117,6 +149,18 @@ class CompanyDao:
       emp = self.convertEmpToDict(result)
       db.close()
       return emp
+
+   # Return info on user for given userID
+   def findUserByID(self, userID):
+      db = self.getConnection()
+      cursor = db.cursor()
+      sql = 'select * from users where userID = %s'
+      values = [userID]
+      cursor.execute(sql, values)
+      result = cursor.fetchone()
+      u = self.convertUserToDict(result)
+      db.close()
+      return u
 
    # Return info on all employees from a given department ID
    def getAllEmpByDept(self, deptID):
@@ -167,6 +211,21 @@ class CompanyDao:
       db.close()
       return emp
 
+   # Update user info for given userID
+   def updateUser(self, u):
+      db = self.getConnection()
+      cursor = db.cursor()
+      sql = "update users set name = %s, password = %s where userID = %s"
+      values = [
+         u['name'],
+         u['password'],
+         u['userID']
+      ]
+      cursor.execute(sql, values)
+      db.commit()
+      db.close()
+      return u
+
    # Delete department for given deptID
    def deleteDept(self, deptID):
       db = self.getConnection()
@@ -184,6 +243,17 @@ class CompanyDao:
       cursor = db.cursor()
       sql = 'delete from employees where empID = %s'
       values = [empID]
+      cursor.execute(sql, values)
+      db.commit()
+      db.close()
+      return {}
+
+   # Delete user for given userID
+   def deleteUser(self, userID):
+      db = self.getConnection()
+      cursor = db.cursor()
+      sql = 'delete from users where userID = %s'
+      values = [userID]
       cursor.execute(sql, values)
       db.commit()
       db.close()
@@ -208,5 +278,15 @@ class CompanyDao:
             value = result[i]
             emp[colName] = value
       return emp
+
+   # Function to convert user into Dictionary/JSON
+   def convertUserToDict(self, result):
+      colnames = ['userID', 'name', 'password']
+      user = {}
+      if result:
+         for i, colName in enumerate(colnames):
+            value = result[i]
+            user[colName] = value
+      return user
 
 companyDao = CompanyDao()

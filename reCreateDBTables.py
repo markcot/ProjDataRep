@@ -56,6 +56,18 @@ if ask == "y":
    cursor.execute(sql)
    print("employees table creation done")
 
+   # recreate users table
+   cursor = db.cursor()
+   sql ="""CREATE TABLE users(
+      userID INT NOT NULL AUTO_INCREMENT,
+      name VARCHAR(255) DEFAULT NULL,
+      password varchar(255) DEFAULT NULL,
+      PRIMARY KEY (userID)
+      )"""
+      
+   cursor.execute(sql)
+   print("users table creation done")
+
    cursor.close()
    db.close()
 else:

@@ -19,6 +19,11 @@ The 'employees' table has the following data fields and links to the 'department
 * salary
 * dept (FOREIGN KEY)
 
+A company application user table 'users' has been added to the database for login access and has the following data fields:
+* userID (PRIMARY KEY)
+* name
+* password
+
 This database is stored in an sql database, which has an initialisation file 'initdb.sql'. The sql commands to create the database 'company' and its associated tables 'departments' and 'employees' are stored in this file.
 
 ### Company sql Database Access Object (DAO)
@@ -27,8 +32,14 @@ The DAO for the 'company' database has been created in the class file 'CompanyDa
 ### Flask server
 A python server called 'server.py' has been created using Python flask for undertaking CRUD operations in association with the 'company' sql DAO. The server can be run from the command line by typing the command 'python server.py'
 
+### App Login
+A basic login page 'login.html' is included in the 'staticpages' folder has been added to the front end of the app. The login page is accessible via the root address "/" of the app (localhost 'http://127.0.0.1:5000/'). The submitted login form does not have a secure authentication for the password as it is visible in URL and Google Chrome gives a warning about this. A more more secure method of login authentication should be undertaken if more time was available to implement it. Allowable "user : password" combinations are:
+* admin : admin
+* mark : 1234
+* andrew : abcd
+
 ### Index GUI page
-A HTML user interface page 'Index.html' is included the 'staticpages' folder. This Graphical User Interface (GUI) can be used to view and undertake CRUD operations on the database content. Once the flask server is running, the GUI can be accessed from a web browser at the localhost address 'http://127.0.0.1:5000/index.html'.
+A HTML user interface page 'Index.html' is included the 'staticpages' folder. This Graphical User Interface (GUI) can be used to view and undertake CRUD operations on the database content. Once the flask server is running, the GUI can be accessed from a web browser after logging in at the login page.
 
 ### Virtual environment
 Conda was used to create a virtual environment (venv) for the server to run on using the following command line commands to create the venv, install and save packages for the venv, set the flask_app server and server mode, run the server, stop the server and finally deactivate the venv.
@@ -36,8 +47,6 @@ Conda was used to create a virtual environment (venv) for the server to run on u
 * λ conda create --name venv python=3.8
 * λ conda activate venv
 * (venv)λ pip install Flask
-* (venv)λ pip install mysql
-* (venv)λ pip install mysql-connector
 * (venv)λ pip install mysql-connector-python
 * (venv)λ pip freeze > requirements.txt
 * (venv)λ set FLASK_APP=server
@@ -51,3 +60,5 @@ The package requirements can also be install from the list in the file 'requirem
 
 ### Deployment to pythonanywhere.com
 The database has been deployed to pythonanywhere at the address http://markcotter.pythonanywhere.com/.
+
+
