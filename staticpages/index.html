@@ -13,146 +13,159 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body class="p-3 mb-2 bg-light text-dark">
+<body class="p-3 mb-2 bg-secondary text-white">
    <!-- Webpage Company Title -->
-   <h1 class="h1">Galway ICT Ltd</h1>
+   <div style="width:270px; margin:0 auto;">
+      <h1 class="h1"><img src="https://thisisgalway.ie/wp-content/uploads/2018/10/Green-Bites-Green-Galway.png" width=270><br />
+      Galway ICT Ltd</h1>
+   </div>
    <hr>
    <!-- Form for creating new and updating existing department data -->
    <div id="createUpdateDept" style="display:none">
-      <h2 id="titleCreateDept" class="h2">Create Department</h2>
-      <h2 id="titleUpdateDept" class="h2">Update Department</h2>
-      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
-      <table id="createUpdateDeptForm" class="table">
-         <thead class="thead-dark">
+      <div style="width:900px; margin:0 auto;">
+         <h2 id="titleCreateDept" class="h2">Create Department</h2>
+         <h2 id="titleUpdateDept" class="h2">Update Department</h2>
+         <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+         <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
+         <table id="createUpdateDeptForm" class="table table-dark">
+            <thead class="thead-dark">
+               <tr>
+                  <th scope="col">Details</th>
+                  <th scope="col">Department Input</th>
+               </tr>
+            </thead>
             <tr>
-               <th scope="col">Details</th>
-               <th scope="col">Department Input</th>
+               <th scope="col">DeptID</th>
+               <td><input type="text" class="form-control" name="deptID" placeholder="not available" readonly="readonly"></td>
             </tr>
-         </thead>
-         <tr>
-            <th scope="col">DeptID</th>
-            <td><input type="text" class="form-control" name="deptID" placeholder="not available" readonly="readonly"></td>
-         </tr>
-         <tr>
-            <th scope="col">Name</th>
-            <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
-         </tr>
-         <tr>
-            <th scope="col">Location</th>
-            <td><input type="text" class="form-control" name="location" placeholder="enter location" required></td>
-         </tr>
-         <tr>
-            <th scope="col">Budget</th>
-            <td><input type="number" class="form-control" name="budget" placeholder="enter budget in euro" required></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td>
-               <button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button>
-               <button id="updateDept" onclick="doUpdateDept()"type="button" class="btn btn-info">Update</button>
-            </td>
-         </tr>
-      </table>
+            <tr>
+               <th scope="col">Name</th>
+               <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
+            </tr>
+            <tr>
+               <th scope="col">Location</th>
+               <td><input type="text" class="form-control" name="location" placeholder="enter location" required></td>
+            </tr>
+            <tr>
+               <th scope="col">Budget</th>
+               <td><input type="number" class="form-control" name="budget" placeholder="enter budget in euro" required></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>
+                  <button id="createDept" onclick="doCreateDept()" type="button" class="btn btn-success">Create</button>
+                  <button id="updateDept" onclick="doUpdateDept()"type="button" class="btn btn-info">Update</button>
+               </td>
+            </tr>
+         </table>
+      </div>
    </div>
 
    <!-- Form for creating new and updating existing employee data -->
    <div id="createUpdateEmp" style="display:none">
-      <h2 id="titleCreateEmp" class="h2">Create Employee</h2>
-      <h2 id="titleUpdateEmp" class="h2">Update Employee</h2>
-      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
-      <table id="createUpdateEmpForm" class="table">
-         <thead class="thead-dark">
+      <div style="width:900px; margin:0 auto;">
+         <h2 id="titleCreateEmp" class="h2">Create Employee</h2>
+         <h2 id="titleUpdateEmp" class="h2">Update Employee</h2>
+         <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+         <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
+         <table id="createUpdateEmpForm" class="table table-dark">
+            <thead class="thead-dark">
+               <tr>
+                  <th scope="col">Details</th>
+                  <th scope="col">Employee Input</th>
+               </tr>
+            </thead>
             <tr>
-               <th scope="col">Details</th>
-               <th scope="col">Employee Input</th>
+               <th scope="col">EmpID</th>
+               <td><input type="text" class="form-control" name="empID" placeholder="not available" readonly="readonly"></td>
             </tr>
-         </thead>
-         <tr>
-            <th scope="col">EmpID</th>
-            <td><input type="text" class="form-control" name="empID" placeholder="not available" readonly="readonly"></td>
-         </tr>
-         <tr>
-            <th scope="col">Name</th>
-            <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
-         </tr>
-         <tr>
-            <th scope="col">Address</th>
-            <td><input type="text" class="form-control" name="address" placeholder="enter address" required></td>
-         </tr>
-         <tr>
-            <th scope="col">Salary</th>
-            <td><input type="number" class="form-control" name="salary" placeholder="enter salary in euro" required></td>
-         </tr>
-         <tr>
-            <th scope="col">Dept</th>
-            <td><input type="number" class="form-control" name="dept" placeholder="enter department ID number" required></td>
-         </tr>
-         <tr>
-            <td></td>
-            <td>
-               <button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button>
-               <button id="updateEmp" onclick="doUpdateEmp()" type="button" class="btn btn-info">Update</button>
-            </td>
-         </tr>
-      </table>
+            <tr>
+               <th scope="col">Name</th>
+               <td><input type="text" class="form-control" name="name" placeholder="enter name" required></td>
+            </tr>
+            <tr>
+               <th scope="col">Address</th>
+               <td><input type="text" class="form-control" name="address" placeholder="enter address" required></td>
+            </tr>
+            <tr>
+               <th scope="col">Salary</th>
+               <td><input type="number" class="form-control" name="salary" placeholder="enter salary in euro" required></td>
+            </tr>
+            <tr>
+               <th scope="col">Dept</th>
+               <td><input type="number" class="form-control" name="dept" placeholder="enter department ID number" required></td>
+            </tr>
+            <tr>
+               <td></td>
+               <td>
+                  <button id="createEmp" onclick="doCreateEmp()" type="button" class="btn btn-success">Create</button>
+                  <button id="updateEmp" onclick="doUpdateEmp()" type="button" class="btn btn-info">Update</button>
+               </td>
+            </tr>
+         </table>
+      </div>
    </div>
 
    <!-- Table for displaying department data -->
    <div id="displayDept" style="display:none">
-      <h2 class="h2">Departments</h2>
-      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showDeptCreate()" type="button" class="btn btn-success">Create Department</button>
-      <table id="deptTable" class="table">
-         <thead class="thead-dark">
-            <tr>
-               <th scope="col">DeptID</th>
-               <th scope="col">Name</th>
-               <th scope="col">Location</th>
-               <th scope="col">Budget</th>
-               <th scope="col" colspan="2">Options</th>
-            </tr>
-         </thead>
-      </table>
+      <div style="width:900px; margin:0 auto;">
+         <h2 class="h2">Departments</h2>
+         <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+         <button onclick="showDeptCreate()" type="button" class="btn btn-success">Create Department</button>
+         <table id="deptTable" class="table table-dark">
+            <thead class="thead-dark">
+               <tr>
+                  <th scope="col">DeptID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Budget</th>
+                  <th scope="col" colspan="2">Options</th>
+               </tr>
+            </thead>
+         </table>
+      </div>
    </div>
 
    <!-- Table for displaying employee data -->
    <div id="displayEmp" style="display:none">
-      <h2 class="h2">Employees</h2>
-      <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
-      <button onclick="showEmpCreate()" type="button" class="btn btn-success">Create Employee</button>
-      <table id="empTable" class="table">
-         <thead class="thead-dark">
-            <tr>
-               <th scope="col">EmpID</th>
-               <th scope="col">Name</th>
-               <th scope="col">Address</th>
-               <th scope="col">Salary</th>
-               <th scope="col">Dept</th>
-               <th scope="col" colspan="2">Options</th>
-            </tr>
-         </thead>
-      </table>
+      <div style="width:900px; margin:0 auto;">
+         <h2 class="h2">Employees</h2>
+         <button onclick="showHome()" type="button" class="btn btn-primary">Home</button>
+         <button onclick="showEmpCreate()" type="button" class="btn btn-success">Create Employee</button>
+         <table id="empTable" class="table table-dark">
+            <thead class="thead-dark">
+               <tr>
+                  <th scope="col">EmpID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Salary</th>
+                  <th scope="col">Dept</th>
+                  <th scope="col" colspan="2">Options</th>
+               </tr>
+            </thead>
+         </table>
+      </div>
    </div>
 
    <!-- Table for displaying Home page -->
    <div id="displayHome">
-      <h2 class="h2">Home Page</h2>
-      <table id="HomeTable" class="table">
-         <tr>
-            <td>
-               <!-- Link to department display table -->
-               <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <!-- Link to employee display table -->
-               <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
-            </td>
-         </tr>
-      </table>
+      <div style="width:900px; margin:0 auto;">
+         <h2 class="h2">Home Page</h2>
+         <table id="HomeTable" class="table table-dark">
+            <tr>
+               <td>
+                  <!-- Link to department display table -->
+                  <button onclick="showDeptDisplay()" type="button" class="btn btn-success">All Departments</button>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <!-- Link to employee display table -->
+                  <button onclick="showEmpDisplay()" type="button" class="btn btn-success">All Employees</button>
+               </td>
+            </tr>
+         </table>
+      </div>
    </div>
    <hr>
 
