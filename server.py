@@ -2,22 +2,22 @@ from flask import Flask, url_for, request, redirect, abort, jsonify
 from CompanyDao import companyDao
 from logging.config import dictConfig
 
-# Logger config. Code verbatim from https://flask.palletsprojects.com/en/1.1.x/logging/
-dictConfig({
-   'version': 1,
-   'formatters': {'default': {
-      'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-   }},
-   'handlers': {'wsgi': {
-      'class': 'logging.StreamHandler',
-      'stream': 'ext://flask.logging.wsgi_errors_stream',
-      'formatter': 'default'
-   }},
-   'root': {
-      'level': 'INFO',
-      'handlers': ['wsgi']
-   }
-})
+# # Logger config. Code verbatim from https://flask.palletsprojects.com/en/1.1.x/logging/
+# dictConfig({
+#    'version': 1,
+#    'formatters': {'default': {
+#       'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+#    }},
+#    'handlers': {'wsgi': {
+#       'class': 'logging.StreamHandler',
+#       'stream': 'ext://flask.logging.wsgi_errors_stream',
+#       'formatter': 'default'
+#    }},
+#    'root': {
+#       'level': 'INFO',
+#       'handlers': ['wsgi']
+#    }
+# })
 
 app = Flask(__name__, static_url_path='', static_folder='staticpages')
 
@@ -246,4 +246,4 @@ def deleteUser(userID):
 
 if __name__ == "__main__":
    # app.run(debug=True)
-   # app.run()
+   app.run()
