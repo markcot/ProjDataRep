@@ -5,12 +5,14 @@ app = Flask(__name__, static_url_path='', static_folder='staticpages')
 
 # Root route
 # curl http://127.0.0.1:5000/
-# @app.route('/')
-# def index():
-#    return app.send_static_file('index.html')
 @app.route('/')
 def login():
    return app.send_static_file('login.html')
+
+# Index route
+# @app.route('/index')
+# def index():
+#    return app.send_static_file('index.html')
 
 #get all departments route
 # curl http://127.0.0.1:5000/departments

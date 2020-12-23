@@ -22,7 +22,7 @@
 
    <hr>
 
-   <div style="width:700px; margin:0 auto;">
+   <div id="login-form" style="width:700px; margin:0 auto;">
    <!-- Login Screen Form with required fields to be entered
 		 Code adapted from https://www.w3schools.com/tags/att_form_action.asp
 		 & https://www.w3schools.com/tags/att_input_required.asp
@@ -33,33 +33,50 @@
             <legend class="form-label">User Login</legend>
          </div>
          <div class="form-group row">
-            <label for="username" class="col-sm-2 col-form-label">User:</label>
+            <label for="uname" class="col-sm-2 col-form-label">User:</label>
             <div class="col-sm-10">
-               <input id="uname" type="text" name="username" class="form-control" placeholder="enter user name" required>
+               <input id="cuname" type="text" name="uname" class="form-control" placeholder="enter user name" required>
             </div>
          </div>
          <div class="form-group row">
-            <label for="password" class="col-sm-2 col-form-label">Password:</label>
+            <label for="pword" class="col-sm-2 col-form-label">Password:</label>
             <div class="col-sm-10">
-               <input id="pword" type="password" name="password" class="form-control" placeholder="enter password" required>
+               <!-- type="password" not used here to avoid Chrome password warning -->
+               <input id="cpword" type="text" name="pword" class="form-control" placeholder="enter password" required>
             </div>
          </div>
          <div class="form-group">
-            <input id="loginEex" type="submit" class="btn btn-primary" value="Login" onclick="validateDetails()">
+            <input id="login-button" type="button" class="btn btn-primary" value="Login" onclick="validateDetails()">
          </div>
       </form>
    </div>
+   <div id="logged-in" style="width:700px; margin:0 auto; display:none;">
+      <h2 id="logged-in-heading" class="h2"></h2>
+      <a href="#" id="home-page-link">
+         <input id="index-button" type="button" class="btn btn-primary" value="Home" >
+      </a>
+   </div>
+
    <hr>
 
    <script>
-      // Dictionary for storing user data
-      var uData = [];
+      
+      var loggedIn = false;
+      
+      // Changes display after login
+      function showLoggedIn() {
+         document.getElementById('login-form').style.display = "none"
+         document.getElementById('logged-in').style.display = "block"
+      }
 
-      // For testing of data import
-      getAllUserData()
+      // Validate and check user details
+      function validateDetails() {
 
-      // Get User Data
-      function getAllUserData() {
+         // Get details from form
+         // var loginForm = document.getElementById("login");
+         var uname = document.getElementById("cuname").value;
+         var pword = document.getElementById("cpword").value;
+
          // ajax getAllUser
          host = window.location.origin
          $.ajax({
@@ -67,68 +84,62 @@
             method: 'GET',
             datatype: 'JSON',
             success: function (results) {
-                  // console.log(results);
-                  uData = results;
+               // console.log(results);
+               // Set variable for checking submit, user and password are acceptable
+               var submitOK = "false";
+               var unameOK = "false";
+               var unameDB = "";
+               var pwordDB = "";
+
+               for (u of results) {
+                  // console.log(u.name);
+                  if (uname.toLowerCase() == u.name.toLowerCase()) {
+                     unameDB = u.name;
+                     pwordDB = u.password;
+                     unameOK = "true";
+                     // console.log("Name is true");
+                     // console.log("DB password is " + pwordDB);
+                     // console.log("Form password is " + pword);
+                  }
+               }
+
+               // Check user name entered into form
+               if (uname == "") {
+                  alert("User cannot be empty");
+                  submitOK = "false";
+               } else if (unameOK == "false") {
+                  alert("User " + uname + " not found");
+                  submitOK = "false";
+
+                  // Check password entered into form for user
+               } else if (pword == "") {
+                  alert("Password cannot be empty");
+                  submitOK = "false";
+               } else if (pword != pwordDB) {
+                  alert("Password incorrect for user " + unameDB);
+                  submitOK = "false";
+
+               // All checked user details are ok
+               } else {
+                  submitOK = "true";
+               }
+
+               // Check if submitted user detail are acceptable.
+               if (submitOK == "true") {
+                  // Use login form to provide a link to the index page.
+                  document.getElementById('logged-in-heading').innerHTML = "Logged in as: " + uname;
+                  document.getElementById('home-page-link').href = host + "/index.html";
+                  showLoggedIn()
+                  // Clear the form fields
+                  document.getElementById("cuname").value = "";
+                  document.getElementById("cpword").value = "";
+                  console.log("Logged in as: " + uname)
+               }
             },
             error: function (xhr, status, error) {
                console.log("error " + error + " code:" + status)
             }
          })
-      }
-
-      // Validate and check user details
-      function validateDetails() {
-
-         // Get details from form
-         var loginForm = document.getElementById("login");
-         var uname = document.getElementById("uname").value;
-         var pword = document.getElementById("pword").value;
-
-         // Set variable for checking submit, user and password are acceptable
-         var submitOK = "false";
-         var unameOK = "false";
-         var unameArr = "";
-         var pwordArr = "";
-
-         // Count data points in user data search it for the name
-         var dataCount = uData.length;
-         for (var i = 0; i < dataCount; i++) {
-            if (uname.toLowerCase() == uData[i].name.toLowerCase()) {
-               unameArr = uData[i].name;
-               pwordArr = uData[i].password;
-               unameOK = "true";
-            }
-         }
-
-         // Check user name entered into form
-         if (uname == "") {
-            alert("User name cannot be empty");
-            submitOK = "false";
-         } else if (unameOK == "false") {
-            alert("Username " + uname + " not found");
-            submitOK = "false";
-
-            // Check password entered into form for user
-         } else if (pword == "") {
-            alert("Password cannot be empty");
-            submitOK = "false";
-         } else if (pword != pwordArr) {
-            alert("Password incorrect for user " + unameArr);
-            submitOK = "false";
-
-            // All checked user details are ok
-         } else {
-            submitOK = "true";
-         }
-
-         // Check if submitted user detail are acceptable.
-         if (submitOK == "false") {// If details not acceptable
-            return false;
-         } else {
-            // Use login form to open the index page.
-            host = window.location.origin
-            loginForm.action = host + "/index.html";
-         }
       }
 
    </script>
