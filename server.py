@@ -28,9 +28,9 @@ def login():
    return app.send_static_file('login.html')
 
 # Index route
-# @app.route('/index')
-# def index():
-#    return app.send_static_file('index.html')
+@app.route('/index')
+def index():
+   return app.send_static_file('index.html')
 
 #get all departments route
 # curl http://127.0.0.1:5000/departments
