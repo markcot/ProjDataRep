@@ -52,9 +52,9 @@
    </div>
    <div id="logged-in" style="width:700px; margin:0 auto; display:none;">
       <h2 id="logged-in-heading" class="h2"></h2>
-      <a id="home-page-link" href="#">
-         <input id="index-button" type="button" class="btn btn-primary" value="Home">
-      </a>
+      <form id="home-page">
+         <input id="index-button" type="submit" class="btn btn-primary" value="Home" onclick="goToIndex()">
+      </form>
    </div>
 
    <hr>
@@ -68,6 +68,13 @@
          document.getElementById('login-form').style.display = "none"
          document.getElementById('logged-in').style.display = "block"
       }
+
+      function goToIndex() {
+         var homeForm = document.getElementById("home-page");
+         host = window.location.origin
+         homeForm.action = host + "/index.html";
+      }
+      
 
       // Validate and check user details
       function validateDetails() {
@@ -128,7 +135,6 @@
                if (submitOK == "true") {
                   // Use login form to provide a link to the index page.
                   document.getElementById('logged-in-heading').innerHTML = "Logged in as: " + uname;
-                  document.getElementById("home-page-link").href = host + "/Index.html";
                   showLoggedIn()
                   // Clear the form fields
                   document.getElementById("cuname").value = "";
