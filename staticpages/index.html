@@ -318,12 +318,16 @@
             method:"DELETE",
             dateType:"JSON",
             success:function(result){
-               tableElement.deleteRow(index);
-               console.log("Department " + dept + " deleted")
+               console.log(result)
+               if (result.done == false){
+                  alert("Cannot delete department with associated employees")
+               } else {
+                  tableElement.deleteRow(index);
+                  console.log("Department " + dept + " deleted")
+               }
             },
             error:function(xhr,status,error){
                console.log(error)
-               alert("Cannot delete department with associated employees")
             }
          })
       }

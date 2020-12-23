@@ -52,8 +52,8 @@
    </div>
    <div id="logged-in" style="width:700px; margin:0 auto; display:none;">
       <h2 id="logged-in-heading" class="h2"></h2>
-      <a href="#" id="home-page-link">
-         <input id="index-button" type="button" class="btn btn-primary" value="Home" >
+      <a id="home-page-link">
+         <input id="index-button" type="button" class="btn btn-primary" value="Home" onclick="goToIndex()">
       </a>
    </div>
 
@@ -67,6 +67,11 @@
       function showLoggedIn() {
          document.getElementById('login-form').style.display = "none"
          document.getElementById('logged-in').style.display = "block"
+      }
+
+      // Link to Index page. Code adapted from https://stackoverflow.com/a/44414014
+      function goToIndex() {
+         window.location.href = "Index.html";
       }
 
       // Validate and check user details
@@ -128,7 +133,6 @@
                if (submitOK == "true") {
                   // Use login form to provide a link to the index page.
                   document.getElementById('logged-in-heading').innerHTML = "Logged in as: " + uname;
-                  document.getElementById('home-page-link').href = host + "/index.html";
                   showLoggedIn()
                   // Clear the form fields
                   document.getElementById("cuname").value = "";
