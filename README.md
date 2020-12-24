@@ -32,14 +32,17 @@ The DAO for the 'company' database has been created in the class file 'CompanyDa
 ### Flask Server
 A python server called 'server.py' has been created using Python flask for undertaking database CRUD operations in association with the 'company' sql DAO. The server can be run from the command line by typing the command 'python server.py'. The server includes some basic session login checks and logging of the database CRUD operations.
 
+### App Interface
+An interface app for company database was designed in HTML for use on the Google Chrome browser. The interface page use the current Bootstrap CSS sheet styles from https://getbootstrap.com/ and includes a login and index page that use flask templates for authentication and routing.
+
 ### App Login
-A basic login page 'login.html' is included in the 'templates' folder has been added to the front end of the app. The login page is accessible via the root address "/login" of the app (localhost 'http://127.0.0.1:5000/login') or as a redirect if accessing the database. The submitted login form does not have a secure authentication for the password. A more secure method of login authentication should be undertaken for a publication version of the app. Allowable "user : password" combinations are:
+A basic login page 'login.html' is included in the 'templates' folder. The login page is accessible via the server url route "host_url/login" or if using a localhost  'http://127.0.0.1:5000/login'. If not logged on some of the other server url route also redirect to the login page. The submitted login form does not have a secure authentication for the password. Chrome gives a pop up warning in relation to the password not being secured, but this can be ignored. A more secure method of password login authentication should be undertaken for a more secure version of the app. Allowable "user : password" combinations are:
 * admin : admin
 * mark : 1234
 * andrew : abcd
 
 ### App Index GUI page
-A HTML user interface page 'Index.html' is included the 'templates' folder. This Graphical User Interface (GUI) can be used to view and undertake CRUD operations on the database content. Once the flask server is running, the GUI can be accessed from a web browser after logging in at the login page. The Index page is accessible once logged via the root address "/" of the app (localhost 'http://127.0.0.1:5000/').
+A HTML user interface page 'Index.html' is included the 'templates' folder. This interface can be used to view and undertake CRUD operations on the database content. Once the app server is running, the GUI can be accessed from a web browser after logging in at the login page. The Index page is accessible via the root url address "host_url/" or if using a localhost 'http://127.0.0.1:5000/'.
 
 ### Virtual environment
 Conda was used to create a localhost virtual environment (venv) for the server to run on using the following command line commands to create the venv, install and save packages for the venv, set the flask_app server and server mode, run the server, stop the server and finally deactivate the venv.
@@ -59,4 +62,8 @@ The package requirements can also be install from the list in the file 'requirem
 * (venv)λ pip install -r requirements.txt
 
 ### Deployment to pythonanywhere.com
-The database app has been deployed to pythonanywhere cloud at the address http://markcotter.pythonanywhere.com/. The app is running an Ubuntu virtual machine with minimal software modules listed in the 'requirement.txt' file. The SQL database for the deployed version of the app is also stored on the pythonanywhere cloud.
+The database app has been deployed to pythonanywhere cloud server at the address:
+
+* http://markcotter.pythonanywhere.com/
+
+The deployed app interface runs an Ubuntu virtual machine with minimal software modules listed in the 'requirement.txt' file. The SQL database for the deployed app is also stored on the pythonanywhere cloud server.
