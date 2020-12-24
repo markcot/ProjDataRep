@@ -121,7 +121,7 @@ class CompanyDao:
       # print(results)
       for result in results:
          resultAsDict = self.convertUserToDict(result)
-         print(result)
+         # print(result)
          returnArray.append(resultAsDict)
       db.close()
       return returnArray

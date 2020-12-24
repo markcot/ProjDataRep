@@ -2,24 +2,47 @@
 <html lang="en">
 
 <head>
-   <title>Index</title>
+   <title>{{ title }}</title>
    <meta charset="UTF-8">
    <meta name="description" content="database interface">
    <meta name="keywords" content="Galway, ICT, Department, Employee, Records">
    <meta name="author" content="Mark Cotter">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <!-- CSS only -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 
 <body class="p-3 mb-2 bg-secondary text-white">
+
+
+
    <!-- Webpage Company Title -->
    <div style="width:270px; margin:0 auto;">
       <h1 class="h1"><img src="https://thisisgalway.ie/wp-content/uploads/2018/10/Green-Bites-Green-Galway.png" width=270><br />
       Galway ICT Ltd</h1>
    </div>
+
    <hr>
+
+   <div style="width:900px; margin:0 auto; text-align:right;">
+      <table id="logged-in-table" class="table table-dark">
+         <thead class="thead-dark">
+            <tr>
+               <td>
+                  <h4 class="h4" style="text-align:left">Logged in | {{ name }} |</h4>
+               </td>
+               <td>
+                  <form id="logout" action="#">
+                     <input id="logout-button" type="submit" class="btn btn-danger" value="Logout" />
+                  </form>
+               </td>
+            </tr>
+         </thead>
+      </table>
+   </div>
+
    <!-- Form for creating new and updating existing department data -->
    <div id="createUpdateDept" style="display:none">
       <div style="width:900px; margin:0 auto;">
@@ -170,6 +193,10 @@
    <hr>
 
    <script>
+
+      var logoutForm = document.getElementById("logout");
+      var host = window.location.origin
+      logoutForm.action = host + "/logout";
 
       function showDeptDisplay() {
          document.getElementById('displayHome').style.display = "none"
