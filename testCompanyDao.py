@@ -1,3 +1,6 @@
+# Temporary python script for testing of DAO CRUD operations
+# Also used for populating initial database content after tables are recreated
+
 from CompanyDao import companyDao
 #print("ok")
 
@@ -56,6 +59,31 @@ emp4 = {
    'dept':1
 }
 
+# User test cases
+u1 = {
+   # 'userID':1, - auto-increment
+   'name':'admin',
+   'password':'admin',
+}
+
+u2 = {
+   # 'userID':2, - auto-increment
+   'name':'mark',
+   'password':'1234',
+}
+
+u3 = {
+   # 'userID':3, - auto-increment
+   'name':'andrew',
+   'password':'abcd',
+}
+
+u4 = {
+   'userID':3,
+   'name':'sarah',
+   'password':'pass',
+}
+
 # Insert table contents
 returnValue = companyDao.createDept(dept1)
 print(returnValue)
@@ -67,11 +95,19 @@ returnValue = companyDao.createEmp(emp2)
 print(returnValue)
 returnValue = companyDao.createEmp(emp3)
 print(returnValue)
+returnValue = companyDao.createUser(u1)
+print(returnValue)
+returnValue = companyDao.createUser(u2)
+print(returnValue)
+returnValue = companyDao.createUser(u3)
+print(returnValue)
 
 # Get all table contents
 returnValue = companyDao.getAllDept()
 print(returnValue)
 returnValue = companyDao.getAllEmp()
+print(returnValue)
+returnValue = companyDao.getAllUser()
 print(returnValue)
 
 # Get table contents by ID
@@ -84,12 +120,17 @@ print(returnValue)
 returnValue = companyDao.getAllEmpByDept(1)
 print("find Emp By Dept Name")
 print(returnValue)
+returnValue = companyDao.findUserByID(1)
+print("find User By Id")
+print(returnValue)
 
-# Update table contents
-returnValue = companyDao.updateDept(dept3)
-print(returnValue)
-returnValue = companyDao.updateEmp(emp4)
-print(returnValue)
+# # Update table contents
+# returnValue = companyDao.updateDept(dept3)
+# print(returnValue)
+# returnValue = companyDao.updateEmp(emp4)
+# print(returnValue)
+# returnValue = companyDao.updateUser(u4)
+# print(returnValue)
 
 # # Delete table contents
 # returnValue = companyDao.deleteDept(1)
@@ -102,9 +143,17 @@ print(returnValue)
 # print(returnValue)
 # returnValue = companyDao.deleteEmp(3)
 # print(returnValue)
+# returnValue = companyDao.deleteUser(1)
+# print(returnValue)
+# returnValue = companyDao.deleteUser(2)
+# print(returnValue)
+# returnValue = companyDao.deleteUser(3)
+# print(returnValue)
 
-# Get all table contents
+# # Get all table contents
 # returnValue = companyDao.getAllDept()
 # print(returnValue)
 # returnValue = companyDao.getAllEmp()
+# print(returnValue)
+# returnValue = companyDao.getAllUser()
 # print(returnValue)

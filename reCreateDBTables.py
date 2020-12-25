@@ -1,3 +1,5 @@
+# Temporary testing python script for recreating initial database tables and table content
+
 import mysql.connector
 import dbconfig as cfg
 
@@ -12,6 +14,13 @@ if ask == "y":
       database=cfg.mysql['database']
    )
    # print ("connection made")
+
+   # Delete users table
+   cursor = db.cursor()
+   sql="drop table users"
+   cursor.execute(sql)
+   db.commit()
+   print("users table delete done")
 
    # Delete employees table
    cursor = db.cursor()

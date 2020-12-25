@@ -4,19 +4,17 @@
 <head>
    <title>{{ title }}</title>
    <meta charset="UTF-8">
-   <meta name="description" content="database interface">
-   <meta name="keywords" content="Galway, ICT, Department, Employee, Records">
+   <meta name="description" content="graphical user interface for sql database">
+   <meta name="keywords" content="Galway, ICT, Department, Employee,  Company, Records">
    <meta name="author" content="Mark Cotter">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <!-- CSS only -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 
 <body class="p-3 mb-2 bg-secondary text-white">
-
-
 
    <!-- Webpage Company Title -->
    <div style="width:270px; margin:0 auto;">
@@ -26,6 +24,7 @@
 
    <hr>
 
+   <!-- Logged In As/Logout Button Banner -->
    <div style="width:900px; margin:0 auto; text-align:right;">
       <table id="logged-in-table" class="table table-dark">
          <thead class="thead-dark">
@@ -34,7 +33,7 @@
                   <h4 class="h4" style="text-align:left">Logged in | {{ name }} |</h4>
                </td>
                <td>
-                  <form id="logout" action="#">
+                  <form id="logout-form" action="#">
                      <input id="logout-button" type="submit" class="btn btn-danger" value="Logout" />
                   </form>
                </td>
@@ -194,8 +193,8 @@
 
    <script>
 
-      var logoutForm = document.getElementById("logout");
-      var host = window.location.origin
+      logoutForm = document.getElementById("logout-form");
+      host = window.location.origin
       logoutForm.action = host + "/logout";
 
       function showDeptDisplay() {
@@ -224,7 +223,7 @@
 
       function showDeptUpdate(thisElem) {
          var rowElement = thisElem.parentNode.parentNode;
-         dept = readDeptFromRow(rowElement)
+         var dept = readDeptFromRow(rowElement)
          populateDeptForm(dept)
 
          document.getElementById('displayHome').style.display = "none"
@@ -241,7 +240,7 @@
       }
 
       function readDeptFromRow(rowElement) {
-         dept = {}
+         var dept = {}
          // deptID is dept table row id omitting the first character 'd'
          dept.deptID = rowElement.getAttribute("id").substr(1);
          dept.name = rowElement.cells[1].firstChild.textContent
@@ -271,7 +270,7 @@
       }
 
       function doUpdateDept() {
-         dept = getDeptFromForm()
+         var dept = getDeptFromForm()
          if (validateDeptForm(dept) == 1) {
             updateDeptServer(dept)         
          }
@@ -299,7 +298,7 @@
       }
 
       function updateDeptTableRow(dept) {
-         rowElement = document.getElementById("d" + dept.deptID)
+         var rowElement = document.getElementById("d" + dept.deptID)
          rowElement.cells[1].firstChild.textContent = dept.name
          rowElement.cells[2].firstChild.textContent = dept.location
          rowElement.cells[3].firstChild.textContent = dept.budget
@@ -307,7 +306,7 @@
       }
 
       function doCreateDept() {
-         dept = getDeptFromForm()
+         var dept = getDeptFromForm()
          if (validateDeptForm(dept) == 1) {
             // ajax createDept
             host = window.location.origin
@@ -347,7 +346,7 @@
             success:function(result){
                console.log(result)
                if (result.done == false){
-                  alert("Cannot delete department with associated employees")
+                  alert("WARNING: Cannot delete department with associated employees!")
                } else {
                   tableElement.deleteRow(index);
                   console.log("Department " + dept + " deleted")
@@ -385,7 +384,7 @@
 
       function showEmpUpdate(thisElem) {
          var rowElement = thisElem.parentNode.parentNode;
-         emp = readEmpFromRow(rowElement)
+         var emp = readEmpFromRow(rowElement)
          populateEmpForm(emp)
 
          document.getElementById('displayHome').style.display = "none"
@@ -402,7 +401,7 @@
       }
 
       function readEmpFromRow(rowElement) {
-         emp = {}
+         var emp = {}
          // empID is emp table row id omitting the first character 'e'
          emp.empID = rowElement.getAttribute("id").substr(1);
          emp.name = rowElement.cells[1].firstChild.textContent
@@ -437,7 +436,7 @@
       }
 
       function doUpdateEmp() {
-         emp = getEmpFromForm()
+         var emp = getEmpFromForm()
          // console.log(emp)
          if (validateEmpForm(emp) == 1) {
             updateEmpServer(emp)       
@@ -462,13 +461,13 @@
             error: function (xhr, status, error) {
                console.log("error" + error)
                // NOTE: deptID has to exist to assign an employee to a deptID
-               alert("INPUT ERROR: Department ID not found")
+               alert("WARNING: INPUT ERROR Department ID not found!")
             }
          })
       }
 
       function updateEmpTableRow(emp) {
-         rowElement = document.getElementById("e" + emp.empID)
+         var rowElement = document.getElementById("e" + emp.empID)
          rowElement.cells[1].firstChild.textContent = emp.name
          rowElement.cells[2].firstChild.textContent = emp.address
          rowElement.cells[3].firstChild.textContent = emp.salary
@@ -477,7 +476,7 @@
       }
 
       function doCreateEmp() {
-         emp = getEmpFromForm()
+         var emp = getEmpFromForm()
          if (validateEmpForm(emp) == 1) {
             // ajax createEmp
             host = window.location.origin
@@ -497,7 +496,7 @@
                error: function (xhr, status, error) {
                   console.log("error " + error)
                   // NOTE: deptID has to exist to assign an employee to a deptID
-                  alert("INPUT ERROR: Department ID not found")
+                  alert("WARNING: INPUT ERROR Department ID not found!")
                }
             })
          }
@@ -508,7 +507,7 @@
          var rowElement = thisElem.parentNode.parentNode;
          var index = rowElement.rowIndex;
          // empID is emp table row id omitting the first character 'e'
-         emp = rowElement.getAttribute("id").substr(1);
+         var emp = rowElement.getAttribute("id").substr(1);
          // ajax deleteEmp
          host = window.location.origin
          $.ajax({
@@ -548,7 +547,7 @@
          // Check if and department form fields are are empty. Code adapted from
          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
          if (d.name.length == 0 || d.location.length == 0 || Number.isNaN(d.budget) == true ){
-            alert("INPUT ERROR: Blank department form field entered")
+            alert("WARNING: INPUT ERROR Blank department form field submitted!")
             return 0
          }
          return 1
@@ -569,7 +568,7 @@
       function validateEmpForm(e){
          // Check if any employee form fields are empty
          if (e.name.length == 0 || e.address.length == 0 || Number.isNaN(e.salary) == true || Number.isNaN(e.dept) == true){
-            alert("INPUT ERROR: Blank employee form field entered")
+            alert("WARNING: INPUT ERROR Blank employee form field submitted!")
             return 0
          }
          return 1
@@ -653,6 +652,7 @@
 
       populateDeptTable()
       populateEmpTable()
+
    </script>
 </body>
 

@@ -4,31 +4,31 @@ USE company;
 
 CREATE TABLE departments(
 	deptID INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) DEFAULT NULL,
-    location varchar(255) DEFAULT NULL,
-    budget INT DEFAULT NULL,
-    PRIMARY KEY (deptID)
-    );    
+   name VARCHAR(255) DEFAULT NULL,
+   location varchar(255) DEFAULT NULL,
+   budget INT DEFAULT NULL,
+   PRIMARY KEY (deptID)
+   );    
 
 CREATE TABLE employees(
 	empID INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) DEFAULT NULL,
-    address VARCHAR(255) DEFAULT NULL,
-    salary INT DEFAULT NULL,
-    dept INT DEFAULT NULL,
-    PRIMARY KEY (empID),
-    CONSTRAINT FK_deptEmp
-		FOREIGN KEY (dept)
-		REFERENCES departments(deptID)
-        ON DELETE RESTRICT
-    );
+   name VARCHAR(255) DEFAULT NULL,
+   address VARCHAR(255) DEFAULT NULL,
+   salary INT DEFAULT NULL,
+   dept INT DEFAULT NULL,
+   PRIMARY KEY (empID),
+   CONSTRAINT FK_deptEmp
+   FOREIGN KEY (dept)
+   REFERENCES departments(deptID)
+      ON DELETE RESTRICT
+   );
 
 CREATE TABLE users(
 	userID INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) DEFAULT NULL,
-    password varchar(255) DEFAULT NULL,
-    PRIMARY KEY (userID)
-    );
+   name VARCHAR(255) DEFAULT NULL,
+   password varchar(255) DEFAULT NULL,
+   PRIMARY KEY (userID)
+   );
 
 INSERT INTO departments (name, location, budget) VALUES ("hr", "dublin", 100000);
 INSERT INTO departments (name, location, budget) VALUES ("sales", "kilkenny", 250000);

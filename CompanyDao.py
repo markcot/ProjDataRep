@@ -1,6 +1,11 @@
+# Company Database Access Object (DAO) for user login and database CRUD operations
+# Provides an interface between the flask server and the sql database
+
+# import module and database access configuration file
 import mysql.connector
 import dbconfig as cfg
 
+# Class object for Database Access Object (DAO)
 class CompanyDao:
 
    # Create database connection pool
@@ -27,7 +32,7 @@ class CompanyDao:
       db = self.initConnectToDB()
       db.close()
 
-   # Create department
+   # Create department, returns deptID of new department
    def createDept(self, dept):
       db = self.getConnection()
       cursor = db.cursor()
@@ -45,7 +50,7 @@ class CompanyDao:
       return lastRowId
       # return dept['deptID']
 
-   # Create employee
+   # Create employee, returns empID of new employee
    def createEmp(self, emp):
       db = self.getConnection()
       cursor = db.cursor()
@@ -64,7 +69,7 @@ class CompanyDao:
       return lastRowId
       # return emp['empID']
 
-   # Create user
+   # Create user, returns userID of new user
    def createUser(self, u):
       db = self.getConnection()
       cursor = db.cursor()
@@ -79,6 +84,7 @@ class CompanyDao:
       lastRowId = cursor.lastrowid
       db.close()
       return lastRowId
+      # return u['userID']
 
    # Return info on all departments
    def getAllDept(self):
@@ -110,7 +116,7 @@ class CompanyDao:
       db.close()
       return returnArray
 
-   # Return all user info
+   # Return info on all users
    def getAllUser(self):
       db = self.getConnection()
       cursor = db.cursor()
@@ -162,7 +168,7 @@ class CompanyDao:
       db.close()
       return u
 
-   # Return info on all employees from a given department ID
+   # Return info on all employees associated with a given department deptID
    def getAllEmpByDept(self, deptID):
       db = self.getConnection()
       cursor = db.cursor()
@@ -178,7 +184,7 @@ class CompanyDao:
       db.close()
       return returnArray
 
-   # Update department info for given deptID
+   # Update department info for given deptID, returns updated info
    def updateDept(self, dept):
       db = self.getConnection()
       cursor = db.cursor()
@@ -194,7 +200,7 @@ class CompanyDao:
       db.close()
       return dept
 
-   # Update employee info for given empID
+   # Update employee info for given empID, returns updated info
    def updateEmp(self, emp):
       db = self.getConnection()
       cursor = db.cursor()
@@ -211,7 +217,7 @@ class CompanyDao:
       db.close()
       return emp
 
-   # Update user info for given userID
+   # Update user info for given userID, returns updated info
    def updateUser(self, u):
       db = self.getConnection()
       cursor = db.cursor()
@@ -226,7 +232,7 @@ class CompanyDao:
       db.close()
       return u
 
-   # Delete department for given deptID
+   # Delete department for given deptID, returns empty dictionary/JSON
    def deleteDept(self, deptID):
       db = self.getConnection()
       cursor = db.cursor()
@@ -237,7 +243,7 @@ class CompanyDao:
       db.close()
       return {}
 
-   # Delete employee for given empID
+   # Delete employee for given empID, returns empty dictionary/JSON
    def deleteEmp(self, empID):
       db = self.getConnection()
       cursor = db.cursor()
@@ -248,7 +254,7 @@ class CompanyDao:
       db.close()
       return {}
 
-   # Delete user for given userID
+   # Delete user for given userID, returns empty dictionary/JSON
    def deleteUser(self, userID):
       db = self.getConnection()
       cursor = db.cursor()
@@ -282,11 +288,12 @@ class CompanyDao:
    # Function to convert user into Dictionary/JSON
    def convertUserToDict(self, result):
       colnames = ['userID', 'name', 'password']
-      user = {}
+      u = {}
       if result:
          for i, colName in enumerate(colnames):
             value = result[i]
-            user[colName] = value
-      return user
+            u[colName] = value
+      return u
 
+# Create instance of the DOA class
 companyDao = CompanyDao()
